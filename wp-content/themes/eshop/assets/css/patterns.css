@@ -34,6 +34,17 @@
     margin: 0;
 }
 
+.wp-block-button.btn-with-pic {
+    border-color: #fff;
+}
+
+.wp-block-button.btn-with-pic a {
+    display: flex;
+    padding: 10px 5px;
+    align-items: center;
+    gap: 5px;
+}
+
 /*HERO SLIDER*/
 .swiper.--hero-slider {
     max-height: 550px;
