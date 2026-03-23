@@ -218,8 +218,9 @@ figure.wp-block-image img {
 
 /*page content*/
 .page-content {
-    margin-top: 50px;
+    margin-top: 0;
     overflow-x: hidden;
+    padding-top: 50px;
 }
 
 h1.post-title {
