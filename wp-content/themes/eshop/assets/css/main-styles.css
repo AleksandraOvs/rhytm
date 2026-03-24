@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: var(--font-body);
+    font-weight: 400;
 }
 
 * {
@@ -301,6 +301,20 @@ footer.footer .container>div {
     margin-bottom: 16px;
 }
 
+.custom-logo-link {
+    width: 100%;
+    max-width: 180px;
+    display: block;
+    height: 60px;
+}
+
+.custom-logo-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
 .footer-col ul li a {
     line-height: 140%;
     text-decoration: underline;
@@ -415,6 +429,6 @@ footer.footer .container .footer-bottom {
     }
 
     footer.footer .container>div {
-        width: calc(100% / 4);
+        width: calc(100% / 2 - 1em);
     }
 }
