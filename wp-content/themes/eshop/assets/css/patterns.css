@@ -55,6 +55,10 @@
     color: #fff !important;
 }
 
+.wp-block-image.size-full.messenger-link a:hover img {
+    filter: brightness(0);
+}
+
 /*HERO SLIDER*/
 .swiper.--hero-slider {
     max-height: 550px;
