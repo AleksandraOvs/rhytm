@@ -372,6 +372,12 @@ p.hero-desc {
     }
 }
 
+@media (max-width: 360px) {
+    .wp-block-button.btn-with-pic a svg {
+        width: 90px;
+    }
+}
+
 /*BANNERS SLIDER*/
 
 .wp-block-columns.swiper.--banners-slider {
