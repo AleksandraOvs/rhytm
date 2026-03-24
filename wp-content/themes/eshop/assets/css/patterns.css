@@ -449,7 +449,8 @@ p.hero-desc {
         padding: 0;
     }
 
-    .wp-block-column.four-columns__col .wp-block-cover {
+    .wp-block-column.four-columns__col .wp-block-cover,
+    .four-columns__col__group {
         aspect-ratio: 1/1 !important;
         height: auto;
         min-height: unset !important;
