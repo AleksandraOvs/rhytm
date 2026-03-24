@@ -440,6 +440,12 @@ p.hero-desc {
     }
 }
 
+@media (max-width: 480px) {
+    .four-columns__col p {
+        font-size: 12px;
+    }
+}
+
 /*THREE COLUMNS*/
 
 .three-columns .wp-block-columns .wp-block-column p {
