@@ -411,6 +411,16 @@ p.hero-desc {
     margin-bottom: 30px;
 }
 
+.wp-block-group.three-columns .wp-block-columns .wp-block-column {
+    position: relative;
+}
+
+.wp-block-group.three-columns .wp-block-columns .wp-block-column figure.adv-img {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
 @media (max-width: 768px) {
     .three-columns {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
