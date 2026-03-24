@@ -329,7 +329,12 @@ p.hero-desc {
         padding-bottom: 230px;
     }
 
-    .hero-buttons .wp-block-group.hero-buttons>div {
+    .wp-block-group.hero-buttons>div {
+        height: 44px;
+        flex-grow: 1;
+    }
+
+    .wp-block-group.hero-buttons>div {
         height: 44px;
         flex-grow: 1;
     }
