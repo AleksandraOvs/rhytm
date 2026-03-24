@@ -118,6 +118,11 @@ a.button {
     display: block;
 }
 
+.wp-block-button a.wp-block-button__link {
+    background: #000;
+    color: #fff;
+}
+
 a.button.stroke-button {
     background: transparent;
     border: 1px solid var(--theme-color-black);
