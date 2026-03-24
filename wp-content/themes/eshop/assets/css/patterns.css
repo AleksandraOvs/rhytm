@@ -269,6 +269,23 @@
     position: relative;
 }
 
+.wp-block-group.hero-buttons {
+    align-items: stretch;
+}
+
+.wp-block-group.hero-buttons>div {
+    height: 100%;
+}
+
+
+.wp-block-group.hero-buttons .wp-block-group.hero-button {
+
+    display: block;
+    margin: 0;
+    height: 100%;
+}
+
+
 p.hero-desc {
     font-size: 30px;
 }
