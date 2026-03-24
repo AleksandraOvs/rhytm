@@ -346,6 +346,8 @@ p.hero-desc {
 
     .hero-buttons .wp-block-buttons .wp-block-button a.wp-block-button__link {
         width: 100%;
+        max-width: 100%;
+        display: block;
     }
 
     .wp-block-column.hero-block__col.hero-image {
