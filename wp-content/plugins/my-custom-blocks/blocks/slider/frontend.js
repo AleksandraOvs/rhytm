@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     slidesPerView: 1.4,
                     spaceBetween: 16,
                     loop: false,
-                    // pagination: {
-                    //     el: slider.querySelector('.swiper-pagination'),
-                    //     clickable: true,
-                    // },
+                    navigation: {
+                        nextEl: slider.querySelector('.swiper-button-next'),
+                        prevEl: slider.querySelector('.swiper-button-prev'),
+                    },
 
                     breakpoints: {
                         480: {
