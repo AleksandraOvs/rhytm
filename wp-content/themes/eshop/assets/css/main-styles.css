@@ -134,6 +134,7 @@ a.button.stroke-button:hover {
 a.button:hover {
     background: #000;
     color: #fff;
+    border-color: #000;
 }
 
 ul {
