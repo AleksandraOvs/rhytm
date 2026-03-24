@@ -448,6 +448,12 @@ p.hero-desc {
     .wp-block-columns.full-container.has-secondary-background-color.has-background {
         padding: 0;
     }
+
+    .wp-block-column.four-columns__col .wp-block-cover {
+        aspect-ratio: 1/1 !important;
+        height: auto;
+        min-height: unset !important;
+    }
 }
 
 /*THREE COLUMNS*/
