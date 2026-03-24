@@ -376,6 +376,11 @@ p.hero-desc {
     .wp-block-button.btn-with-pic a svg {
         width: 90px;
     }
+
+    .wp-block-button a.wp-block-button__link,
+    a.button {
+        font-size: 16px;
+    }
 }
 
 /*BANNERS SLIDER*/
