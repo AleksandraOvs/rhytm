@@ -106,9 +106,9 @@ a.button.stroke-button:hover {
 .wp-block-buttons .wp-block-button a.wp-block-button__link:hover,
 a.wp-block-button__link.has-accent-background-color:hover,
 a.button:hover {
-    background: #000;
-    color: #fff;
-    border-color: #000;
+    background: #000 !important;
+    color: #fff !important;
+    border-color: #000 !important;
 }
 
 /***/
@@ -144,7 +144,6 @@ a {
 a:hover {
     color: var(--theme-color-accent);
 }
-
 
 ul {
     padding: 0;
