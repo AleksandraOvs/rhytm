@@ -132,8 +132,8 @@ a.button.stroke-button:hover {
 
 .wp-block-buttons .wp-block-button a.wp-block-button__link:hover,
 a.button:hover {
-    background: #fff;
-    color: var(--theme-color-black);
+    background: #000;
+    color: #fff;
 }
 
 ul {
