@@ -164,6 +164,10 @@ p.wp-block-paragraph {
     border-radius: 20px;
 }
 
+.aspect-ratio11 {
+    aspect-ratio: 1/1;
+}
+
 .m0 {
     margin: 0 !important;
 }
