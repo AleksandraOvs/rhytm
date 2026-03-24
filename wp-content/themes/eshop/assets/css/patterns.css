@@ -473,19 +473,20 @@ p.hero-desc {
     bottom: 20px;
 }
 
-@media (max-width: 768px) {}
-
-@media (max-width: 480px) {
-    .gap2.three-columns {
-        gap: 1em;
-    }
-
+@media (max-width: 576px) {
     .three-columns {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 
     .three-columns .wp-block-columns .wp-block-column {
         padding: 15px !important;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .gap2.three-columns {
+        gap: 1em;
     }
 
     .three-columns .wp-block-columns .wp-block-column p {
