@@ -55,6 +55,10 @@
     color: #fff !important;
 }
 
+.wp-block-image.size-full.messenger-link a {
+    transition: all .5s linear;
+}
+
 .wp-block-image.size-full.messenger-link a:hover img {
     filter: brightness(0);
 }
