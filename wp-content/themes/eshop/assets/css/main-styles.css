@@ -119,8 +119,8 @@ a.button {
 }
 
 .wp-block-button a.wp-block-button__link {
-    background: #000;
-    color: #fff;
+    background: var(--theme-color-accent);
+    color: var(--theme-color-black);
 }
 
 a.button.stroke-button {
