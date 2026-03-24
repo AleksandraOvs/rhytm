@@ -14,7 +14,16 @@ function site_carbon()
 
             Field::make('text', 'crb_tel_text', 'Номер телефона')
                 ->set_width(33),
+            Field::make('image', 'crb_tel_img', 'Номер телефона')
+                ->set_width(33),
             Field::make('text', 'crb_tel_link', 'Ссылка телефона')
+                ->set_width(33),
+
+            Field::make('text', 'crb_email_text', 'Эл.почта')
+                ->set_width(33),
+            Field::make('image', 'crb_email_img', 'Номер телефона')
+                ->set_width(33),
+            Field::make('text', 'crb_email_link', 'Ссылка телефона')
                 ->set_width(33),
 
             Field::make('complex', 'crb_contacts', 'Мессенджеры')

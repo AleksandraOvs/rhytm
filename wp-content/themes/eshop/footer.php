@@ -63,6 +63,8 @@
     <?php echo get_current_template() ?>
 </div>
 
+<?php get_template_part('template-parts/toggle-contacts'); ?>
+
 <?php wp_footer(); ?>
 </body>
 
