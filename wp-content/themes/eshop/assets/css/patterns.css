@@ -444,6 +444,10 @@ p.hero-desc {
     .four-columns__col p {
         font-size: 12px;
     }
+
+    .wp-block-columns.full-container.has-secondary-background-color.has-background {
+        padding: 0;
+    }
 }
 
 /*THREE COLUMNS*/
