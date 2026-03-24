@@ -35,7 +35,11 @@
 }
 
 .wp-block-button.btn-with-pic {
-    border-color: #fff;
+    border: none;
+}
+
+.wp-block-button.btn-with-pic a {
+    border: none;
 }
 
 .wp-block-button.btn-with-pic a {
