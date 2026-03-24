@@ -249,6 +249,24 @@ button.menu-toggle div:not(:first-child) {
 }
 
 @media (max-width: 992px) {
+    .site-header-top {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .header-contacts {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        width: calc(100% - 100px);
+        justify-content: center;
+    }
+
+    .site-header-top .container {
+        width: calc(100% - 55px);
+    }
+
     .menu-toggle {
         display: block;
     }
