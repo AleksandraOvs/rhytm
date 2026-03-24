@@ -350,6 +350,11 @@ p.hero-desc {
         display: block;
     }
 
+    .wp-block-button.btn-with-pic a.wp-block-button__link {
+        max-width: 100%;
+        justify-content: center;
+    }
+
     .wp-block-column.hero-block__col.hero-image {
         width: 80%;
         position: absolute;
