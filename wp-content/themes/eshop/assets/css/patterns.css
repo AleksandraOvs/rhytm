@@ -47,6 +47,12 @@
     padding: 10px;
     align-items: center;
     gap: 5px;
+    transition: all .5s linear;
+}
+
+.wp-block-button.btn-with-pic a:hover {
+    background: #000;
+    color: #fff;
 }
 
 /*HERO SLIDER*/
