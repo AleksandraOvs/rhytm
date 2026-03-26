@@ -11,35 +11,6 @@ $email_img = carbon_get_theme_option('crb_email_img');
 <div class="toggle-contacts__bar">
     <div class="toggle-contacts__list">
 
-        <?php if (!empty($tel_link)) :
-            $tel_img_url = wp_get_attachment_image_url($tel_img, 'full');
-        ?>
-            <div class="toggle-contacts__list__item">
-
-                <a href="<?php echo esc_url($tel_link); ?>" class="toggle-contacts__list__item__link">
-                    <span><?php echo esc_html($tel_text); ?></span>
-                    <?php if ($tel_img_url) : ?>
-                        <img src="<?php echo esc_url($tel_img_url); ?>" alt="<?php echo esc_attr($tel_text); ?>">
-                    <?php endif; ?>
-
-                </a>
-            </div>
-        <?php endif; ?>
-        <?php if (!empty($email_link)) :
-            $email_img_url = wp_get_attachment_image_url($email_img, 'full');
-        ?>
-            <div class="toggle-contacts__list__item">
-
-                <a href="mailto:<?php echo esc_attr($email_link); ?>" class="toggle-contacts__list__item__link">
-                    <span><?php echo esc_html($email_text); ?></span>
-                    <?php if ($email_img_url) : ?>
-                        <img src="<?php echo esc_url($email_img_url); ?>" alt="<?php echo esc_attr($email_text); ?>">
-                    <?php endif; ?>
-
-                </a>
-            </div>
-        <?php endif; ?>
-
         <?php
         $messengers = carbon_get_theme_option('crb_contacts');
 
@@ -73,6 +44,37 @@ $email_img = carbon_get_theme_option('crb_email_img');
             endforeach;
         endif;
         ?>
+
+        <?php if (!empty($tel_link)) :
+            $tel_img_url = wp_get_attachment_image_url($tel_img, 'full');
+        ?>
+            <div class="toggle-contacts__list__item">
+
+                <a href="<?php echo esc_url($tel_link); ?>" class="toggle-contacts__list__item__link">
+                    <span><?php echo esc_html($tel_text); ?></span>
+                    <?php if ($tel_img_url) : ?>
+                        <img src="<?php echo esc_url($tel_img_url); ?>" alt="<?php echo esc_attr($tel_text); ?>">
+                    <?php endif; ?>
+
+                </a>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($email_link)) :
+            $email_img_url = wp_get_attachment_image_url($email_img, 'full');
+        ?>
+            <div class="toggle-contacts__list__item">
+
+                <a href="mailto:<?php echo esc_attr($email_link); ?>" class="toggle-contacts__list__item__link">
+                    <span><?php echo esc_html($email_text); ?></span>
+                    <?php if ($email_img_url) : ?>
+                        <img src="<?php echo esc_url($email_img_url); ?>" alt="<?php echo esc_attr($email_text); ?>">
+                    <?php endif; ?>
+
+                </a>
+            </div>
+        <?php endif; ?>
+
+
     </div>
 
     <a href="#" class="toggle-contacts-icon">
