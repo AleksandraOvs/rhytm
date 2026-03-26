@@ -278,7 +278,7 @@ figure.wp-block-image.size-full img {
 
 /*FAQ BLOCK*/
 
-.faq-block {
+.faq-list {
     display: flex;
     flex-direction: column;
 }
