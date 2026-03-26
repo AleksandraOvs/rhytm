@@ -295,9 +295,9 @@ button.menu-toggle div:not(:first-child) {
         justify-content: center;
     }
 
-    .site-header-top .container {
+    /* .site-header-top .container {
         width: calc(100% - 55px);
-    }
+    } */
 
     .menu-toggle {
         display: block;
