@@ -16,6 +16,11 @@
     margin-top: -35px;
 }
 
+.wp-block-buttons.feedback-btns .wp-block-button a:hover {
+    background: #000 !important;
+    color: #fff !important;
+}
+
 .padding-hor {
     width: 70%;
     padding-right: 10% !important;
