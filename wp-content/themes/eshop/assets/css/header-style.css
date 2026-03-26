@@ -251,7 +251,7 @@ header {
 button.menu-toggle .bar {
     background: var(--theme-color-black);
     border-radius: 3px;
-    width: 35px;
+    width: 26px;
     height: 2px;
 }
 
@@ -264,7 +264,7 @@ button.menu-toggle.active .bar {
 }
 
 button.menu-toggle.active .bar:nth-child(1) {
-    transform: translate(0, 10px) rotate(135deg);
+    transform: translate(0, 6px) rotate(135deg);
 }
 
 button.menu-toggle.active .bar:nth-child(2) {
@@ -273,11 +273,11 @@ button.menu-toggle.active .bar:nth-child(2) {
 }
 
 button.menu-toggle.active .bar:nth-child(3) {
-    transform: translate(0, -14px) rotate(225deg);
+    transform: translate(0, -7px) rotate(225deg);
 }
 
 button.menu-toggle div:not(:first-child) {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 @media (max-width: 992px) {
