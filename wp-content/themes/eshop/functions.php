@@ -142,7 +142,7 @@ register_nav_menus(
         'header' => 'header_menu',
         'main' => 'main_menu',
         'catalog_menu' => 'catalog_menu',
-        'docs_menu' => 'docs_menu',
+        'mobile_menu' => 'mobile_menu',
     )
 );
 
