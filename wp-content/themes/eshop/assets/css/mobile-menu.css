@@ -29,26 +29,32 @@
 .mobile-menu ul li a {
     padding-bottom: 7px;
     position: relative;
+    font-size: 20px;
+    text-decoration: none;
 }
 
 .mobile-menu ul li:not(:last-child) {
     margin-bottom: 20px;
 }
 
-.mobile-menu ul li a:after {
-    content: '';
-    width: 0;
-    height: 1px;
-    background: #cacaac;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: all .5s linear;
-}
+
 
 .mobile-menu ul li a:hover:after {
     width: 100%;
+}
+
+@media (min-width: 481px) {
+    .mobile-menu ul li a:after {
+        content: '';
+        width: 0;
+        height: 1px;
+        background: #cacaac;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transition: all .5s linear;
+    }
 }
 
 @media (max-width: 480px) {
