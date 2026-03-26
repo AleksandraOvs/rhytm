@@ -141,6 +141,7 @@ register_nav_menus(
     array(
         'header' => 'header_menu',
         'catalog_menu' => 'catalog_menu',
+        'mobile_menu' => 'mobile_menu',
     )
 );
 
