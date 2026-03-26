@@ -301,7 +301,6 @@ button.menu-toggle div:not(:first-child) {
 
     .menu-toggle {
         display: block;
-        margin-right: 20px;
     }
 
     /* #menu-main {
