@@ -411,9 +411,8 @@ p.hero-desc {
     }
 
     .swiper.slider .swiper-controls {
-        justify-content: center;
-        gap: 30px;
-        margin-top: 20px
+        width: max-content;
+        margin: 20px auto 0;
     }
 
     .wp-block-buttons.feedback-btns {
