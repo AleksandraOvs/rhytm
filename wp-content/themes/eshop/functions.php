@@ -140,9 +140,7 @@ add_action('enqueue_block_editor_assets', function () {
 register_nav_menus(
     array(
         'header' => 'header_menu',
-        'main' => 'main_menu',
         'catalog_menu' => 'catalog_menu',
-        'mobile_menu' => 'mobile_menu',
     )
 );
 
