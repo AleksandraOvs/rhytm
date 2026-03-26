@@ -419,6 +419,14 @@ p.hero-desc {
     .wp-block-buttons.feedback-btns {
         margin: 20px auto 0;
     }
+
+    .gallery-slider.swiper .swiper-controls .swiper-pagination {
+        display: none;
+    }
+
+    .gallery-slider.swiper .swiper-controls {
+        justify-content: flex-end;
+    }
 }
 
 @media (max-width: 360px) {
