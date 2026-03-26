@@ -42,6 +42,8 @@
     border: none;
     text-align: left;
     cursor: pointer;
+    font-weight: 500;
+    line-height: 120%;
     display: flex;
     justify-content: space-between;
     align-items: center;
