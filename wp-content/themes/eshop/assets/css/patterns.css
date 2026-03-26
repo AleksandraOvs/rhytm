@@ -13,7 +13,7 @@
     width: max-content;
     margin-right: 0;
     margin-left: auto;
-    margin-top: -30px;
+    margin-top: -35px;
 }
 
 .padding-hor {
@@ -225,7 +225,7 @@
     justify-content: space-between;
     align-items: center;
     height: auto;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .swiper-arrows._white .swiper-button-prev,
