@@ -14,6 +14,8 @@
     margin-right: 0;
     margin-left: auto;
     margin-top: -35px;
+    position: relative;
+    z-index: 100;
 }
 
 .wp-block-buttons.feedback-btns .wp-block-button a:hover {
