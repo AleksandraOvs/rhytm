@@ -1,3 +1,10 @@
+<div id="main-form" style="display:none;max-width:600px;">
+    <?php
+    if ($mainform_shortcode = carbon_get_theme_option('crb_mainform_shortcode')) {
+        echo do_shortcode($mainform_shortcode);
+    }
+    ?>
+</div>
 <?php if (is_active_sidebar('eshop-footer-area')) { ?>
     <div id="content-footer-section" class="row clearfix">
         <?php

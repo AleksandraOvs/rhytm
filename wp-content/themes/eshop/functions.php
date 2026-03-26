@@ -29,6 +29,7 @@ function e_shop_enqueue_styles()
 
     wp_enqueue_script('e-shop-custom-script', get_stylesheet_directory_uri() . '/assets/js/e-shop-custom.js', array('jquery'), '1.0.1', true);
     wp_enqueue_script('nav-script', get_stylesheet_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true);
+    wp_enqueue_script('main-form-script', get_stylesheet_directory_uri() . '/assets/js/main-form.js', array(), _S_VERSION, true);
     wp_enqueue_script('toggle-contacts-script', get_stylesheet_directory_uri() . '/assets/js/toggle-contacts.js', array(), _S_VERSION, true);
     wp_enqueue_script('faq-script', get_stylesheet_directory_uri() . '/assets/js/faq.js', array(), _S_VERSION, true);
 }
