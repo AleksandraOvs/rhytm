@@ -276,6 +276,13 @@ figure.wp-block-image.size-full img {
     background: rgba(0, 0, 0, .3);
 }
 
+/*FAQ BLOCK*/
+
+.faq-block {
+    display: flex;
+    flex-direction: column;
+}
+
 /*HERO BLOCK*/
 .hero-block__col figure {
     margin: 0;
