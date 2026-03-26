@@ -401,6 +401,16 @@ p.hero-desc {
     .hero-block__col__inner p.hero-desc {
         font-size: 20px;
     }
+
+    .swiper.slider .swiper-controls {
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px
+    }
+
+    .wp-block-buttons.feedback-btns {
+        margin: 20px auto 0;
+    }
 }
 
 @media (max-width: 360px) {
