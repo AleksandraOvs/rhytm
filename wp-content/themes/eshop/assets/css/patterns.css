@@ -9,6 +9,14 @@
     transform: translateX(-20px);
 }
 
+.feedback-btns {
+    width: max-content;
+    margin-right: 0;
+    margin-left: auto;
+    transform: translateY(-30px);
+    margin-top: -30px;
+}
+
 .padding-hor {
     width: 70%;
     padding-right: 10% !important;
