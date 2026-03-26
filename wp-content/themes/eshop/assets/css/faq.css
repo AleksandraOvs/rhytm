@@ -19,27 +19,20 @@
 .wp-block-column.faq-item h3:after,
 .wp-block-column.faq-item h4:after {
     content: '';
-    width: 40px;
-    height: 40px;
-    background-color: var(--accent2);
+    width: 24px;
+    height: 24px;
     border-radius: 100%;
     display: block;
-    background-image: url(images/svg/down.svg);
+    background-image: url(../../img/svg/arrow-down.svg);
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: center;
 }
 
-.wp-block-column.faq-item.active h3:after {
+.wp-block-column.faq-item.active h3:after,
+.wp-block-column.faq-item.active h4:after {
     content: '';
-    width: 40px;
-    height: 40px;
-    display: block;
-    background-color: #fff;
-    background-image: url(images/svg/up.svg);
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: center;
+    transform: rotate(180deg);
 }
 
 .faq-question {
