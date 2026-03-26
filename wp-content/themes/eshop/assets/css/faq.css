@@ -82,9 +82,9 @@ h3.faq-question {
     max-height: 0;
     overflow: hidden;
     margin: 0;
-    margin-top: 10px;
+    margin-top: 0;
     transition: max-height 0.3s ease;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     font-size: 16px;
     color: #fff;
     line-height: 140%;
