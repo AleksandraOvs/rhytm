@@ -22,12 +22,14 @@ function e_shop_enqueue_styles()
     wp_enqueue_style('eshop-header', get_template_directory_uri() . '/assets/css/header-style.css');
     wp_enqueue_style('patterns-styles', get_template_directory_uri() . '/assets/css/patterns.css');
     wp_enqueue_style('toggle-contacts-styles', get_template_directory_uri() . '/assets/css/toggle-contacts.css');
+    wp_enqueue_style('faq-styles', get_template_directory_uri() . '/assets/css/faq.css');
 
     //wp_enqueue_style('e-shop-styles', get_stylesheet_directory_uri());
 
     wp_enqueue_script('e-shop-custom-script', get_stylesheet_directory_uri() . '/assets/js/e-shop-custom.js', array('jquery'), '1.0.1', true);
     wp_enqueue_script('nav-script', get_stylesheet_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true);
     wp_enqueue_script('toggle-contacts-script', get_stylesheet_directory_uri() . '/assets/js/toggle-contacts.js', array(), _S_VERSION, true);
+    wp_enqueue_script('faq-script', get_stylesheet_directory_uri() . '/assets/js/faq.js', array(), _S_VERSION, true);
 }
 
 function mytheme_add_woocommerce_support()
