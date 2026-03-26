@@ -10,35 +10,24 @@
 <!-- wp:group {"className":"faq-section"} -->
 <div class="wp-block-group faq-section">
 
-    <!-- wp:column {"className":"container"} -->
-    <div class="wp-block-column container">
+    <!-- wp:columns {"className":"faq-list"} -->
+    <div class="wp-block-columns faq-list">
 
-        <!-- wp:heading {"level":2} -->
-        <h2>Ответы на частые вопросы наших клиентов</h2>
-        <!-- /wp:heading -->
+        <!-- wp:column {"className":"faq-item"} -->
+        <div class="wp-block-column faq-item">
 
-        <!-- wp:columns {"className":"faq-list"} -->
-        <div class="wp-block-columns faq-list">
+            <!-- wp:heading {"level":4,"className":"faq-question"} -->
+            <h4 class="faq-question">Вопрос</h4>
+            <!-- /wp:heading -->
 
-            <!-- wp:column {"className":"faq-item"} -->
-            <div class="wp-block-column faq-item">
-
-                <!-- wp:heading {"level":4,"className":"faq-question"} -->
-                <h4 class="faq-question">Вопрос</h4>
-                <!-- /wp:heading -->
-
-                <!-- wp:paragraph {"className":"faq-answer"} -->
-                <p class="faq-answer">Ответ</p>
-                <!-- /wp:paragraph -->
-
-            </div>
-            <!-- /wp:column -->
+            <!-- wp:paragraph {"className":"faq-answer"} -->
+            <p class="faq-answer">Ответ</p>
+            <!-- /wp:paragraph -->
 
         </div>
-        <!-- /wp:columns -->
+        <!-- /wp:column -->
 
     </div>
-    <!-- /wp:column -->
-
+    <!-- /wp:columns -->
 </div>
 <!-- /wp:group -->
