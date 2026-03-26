@@ -49,6 +49,9 @@ $email_img = carbon_get_theme_option('crb_email_img');
                 $mes_link = isset($messenger['crb_contact_link']) ? $messenger['crb_contact_link'] : '';
                 $mes_img_id = isset($messenger['crb_contact_image']) ? $messenger['crb_contact_image'] : '';
                 $mes_img_url = $mes_img_id ? wp_get_attachment_image_url($mes_img_id, 'full') : '';
+                $mes_img_alt_id = isset($messenger['crb_contact_image_alt']) ? $messenger['crb_contact_image_alt'] : '';
+
+                $mes_img_alt_url = $mes_img_alt_id ? wp_get_attachment_image_url($mes_img_alt_id, 'full') : '';
                 $mes_text = isset($messenger['crb_contact_name']) ? $messenger['crb_contact_name'] : '';
         ?>
                 <div class="toggle-contacts__list__item">
@@ -57,9 +60,12 @@ $email_img = carbon_get_theme_option('crb_email_img');
 
                         <a class="toggle-contacts__list__item__link" href="<?php echo esc_url($mes_link); ?>">
                             <span><?php echo esc_html($mes_text); ?></span>
-                            <?php if ($mes_img_url) : ?>
+                            <?php if ($mes_img_alt_url) { ?>
+                                <img src="<?php echo esc_url($mes_img_alt_url); ?>" alt="">
+                            <?php } elseif ($mes_img_url) { ?>
                                 <img src="<?php echo esc_url($mes_img_url); ?>" alt="">
-                            <?php endif; ?>
+                            <?php
+                            } ?>
                         </a>
                     <?php endif; ?>
                 </div>

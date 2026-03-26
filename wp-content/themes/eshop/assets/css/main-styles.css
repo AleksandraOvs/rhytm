@@ -427,6 +427,7 @@ footer.footer .container .footer-bottom {
 }
 
 @media (max-width: 480px) {
+
     #menu-docs li a {
         font-size: 12px;
     }

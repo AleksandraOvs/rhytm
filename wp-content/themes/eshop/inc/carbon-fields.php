@@ -30,11 +30,13 @@ function site_carbon()
 
                 ->add_fields(array(
                     Field::make('image', 'crb_contact_image', 'Иконка')
-                        ->set_width(33),
+                        ->set_width(25),
+                    Field::make('image', 'crb_contact_image_alt', 'Доп. Иконка')
+                        ->set_width(25),
                     Field::make('text', 'crb_contact_name', 'Название')
-                        ->set_width(33),
+                        ->set_width(25),
                     Field::make('text', 'crb_contact_link', 'Ссылка')
-                        ->set_width(33),
+                        ->set_width(25),
                 )),
 
             Field::make('text', 'crb_button_text', 'Кнопка')
