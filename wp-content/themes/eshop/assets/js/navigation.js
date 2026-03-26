@@ -3,24 +3,47 @@ document.addEventListener("DOMContentLoaded", function () {
     const body = document.body;
     const menu = document.querySelector(".mobile-menu");
     const burger = document.querySelector(".menu-toggle");
+
+    // Функция закрытия меню (чтобы не дублировать код)
+    const closeMenu = () => {
+        if (burger) burger.classList.remove("active");
+        if (menu) menu.classList.remove("active");
+        body.classList.remove("_fixed");
+    };
+
+    // Функция открытия/закрытия
+    const toggleMenu = () => {
+        if (burger) burger.classList.toggle("active");
+        if (menu) menu.classList.toggle("active");
+        body.classList.toggle("_fixed");
+    };
+
     document.addEventListener("click", function (e) {
+
+        // Клик по бургеру
         if (burger && e.target.closest(".menu-toggle")) {
             e.stopPropagation();
-            burger.classList.toggle("active");
-            if (menu) menu.classList.toggle("active");
-            body.classList.toggle("_fixed");
+            toggleMenu();
             return;
         }
-        if (menu && e.target.closest(".mobile-menu .main-navigation a")) {
-            if (burger) burger.classList.remove("active");
-            menu.classList.remove("active");
-            body.classList.remove("_fixed");
+
+        // ✅ Клик по ЛЮБОЙ ссылке внутри меню
+        if (menu && e.target.closest(".mobile-menu a")) {
+            closeMenu();
             return;
         }
-        if (menu && !e.target.closest(".mobile-menu") && burger) {
-            burger.classList.remove("active");
-            menu.classList.remove("active");
-            body.classList.remove("_fixed");
+
+        // Клик вне меню
+        if (menu && !e.target.closest(".mobile-menu")) {
+            closeMenu();
+        }
+    });
+
+
+    // ✅ Закрытие по ESC (очень удобно)
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            closeMenu();
         }
     });
 

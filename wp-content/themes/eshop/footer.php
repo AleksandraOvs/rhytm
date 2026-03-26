@@ -65,6 +65,11 @@
 
 <?php get_template_part('template-parts/toggle-contacts'); ?>
 
+<?php get_template_part('template-parts/mobile-menu');
+?>
+
+
+
 <?php wp_footer(); ?>
 </body>
 

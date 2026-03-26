@@ -23,6 +23,7 @@ function e_shop_enqueue_styles()
     wp_enqueue_style('patterns-styles', get_template_directory_uri() . '/assets/css/patterns.css');
     wp_enqueue_style('toggle-contacts-styles', get_template_directory_uri() . '/assets/css/toggle-contacts.css');
     wp_enqueue_style('faq-styles', get_template_directory_uri() . '/assets/css/faq.css');
+    wp_enqueue_style('mob-menu-styles', get_template_directory_uri() . '/assets/css/mobile-menu.css');
 
     //wp_enqueue_style('e-shop-styles', get_stylesheet_directory_uri());
 
