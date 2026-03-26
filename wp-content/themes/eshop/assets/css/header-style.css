@@ -21,10 +21,16 @@ header {
     align-items: center;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
 .cart-icon {
     width: 21px;
     height: 21px;
     display: block;
+    margin-right: 20px;
     transform: translateY(3px);
 }
 
