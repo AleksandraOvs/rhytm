@@ -29,7 +29,7 @@
 }
 
 .categories-block__item h3 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     text-align: center;
 }
@@ -61,7 +61,4 @@
         text-align: center;
     }
 
-    .categories-block__item h3 {
-        font-size: 13px;
-    }
 }
