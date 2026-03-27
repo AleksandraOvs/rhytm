@@ -11,9 +11,11 @@ if (!$items) {
 <div class="swiper slider">
     <div class="swiper-wrapper">
         <?php foreach ($items as $item) : ?>
+            <?php $gallery_id = 'gallery-slider-' . get_the_ID(); ?>
+
             <div class="swiper-slide slider-slide">
                 <?php if (!empty($item['img'])) : ?>
-                    <a href="<?php echo esc_url($item['img']); ?>" data-fancybox="gallery-slider">
+                    <a href="<?php echo esc_url($item['img']); ?>" data-fancybox="<?php echo esc_attr($gallery_id); ?>">
                         <img src="<?php echo esc_url($item['img']); ?>" alt="<?php echo esc_attr($item['alt'] ?? ''); ?>">
                     </a>
                 <?php endif; ?>
