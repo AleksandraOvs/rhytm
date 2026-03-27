@@ -1,32 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+    document.querySelectorAll('a[href="#main-form"]').forEach(link => {
         link.addEventListener("click", e => {
-            const targetSelector = link.getAttribute("href");
-            if (!targetSelector || targetSelector.length <= 1) return;
+            e.preventDefault();
 
-            const target = document.querySelector(targetSelector);
-
-            // === Fancybox ===
-            if (targetSelector === "#main-form") {
-                e.preventDefault();
-
-                if (typeof Fancybox !== "undefined") {
-                    Fancybox.show([
-                        {
-                            src: targetSelector, // ← исправлено
-                            type: "inline"
-                        }
-                    ]);
-                }
-
-                return;
-            }
-
-            // === Скролл ===
-            if (target) {
-                e.preventDefault();
-                smoothScrollToElement(targetSelector, 800);
+            if (typeof Fancybox !== "undefined") {
+                Fancybox.show([
+                    {
+                        src: "#main-form",
+                        type: "inline"
+                    }
+                ]);
             }
         });
     });
