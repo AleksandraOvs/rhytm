@@ -76,9 +76,6 @@ $email_ico = '<svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns=
             </div>
             <span><?php echo esc_html($tel_text);
                     ?></span>
-            <?php if ($tel_img_url) : ?>
-                <img src="<?php echo esc_url($tel_img_url); ?>" alt="<?php echo esc_attr($tel_text); ?>">
-            <?php endif; ?>
 
         </a>
 
@@ -94,9 +91,6 @@ $email_ico = '<svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns=
             </div>
             <span><?php echo esc_html($email_text);
                     ?></span>
-            <?php if ($email_img_url) : ?>
-                <img src="<?php echo esc_url($email_img_url); ?>" alt="<?php echo esc_attr($email_text); ?>">
-            <?php endif; ?>
 
         </a>
 
