@@ -53,7 +53,7 @@
                         <nav id="site-navigation" class="main-navigation">
 
                             <div class="header-menu__inner">
-                                <a href="#catalog" class="button toggle-menu">Каталог</a>
+                                <a href="#catalog" class="button">Каталог</a>
                                 <!-- <a href="#catalog" class="button toggle-menu">Каталог</a> -->
                                 <!-- <div class="header-menu">
                                     <?php //wp_nav_menu([
