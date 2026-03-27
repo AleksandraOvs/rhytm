@@ -44,7 +44,7 @@ function plugin_scan_fonts()
         $family = preg_replace('/[-_](thin|light|regular|medium|bold|semibold|extrabold|black|italic).*$/i', '', $filename);
         $families[$family][] = [
             'file' => $filename,
-            'url'  => THEME_RESOURCES_URL . 'assets/fonts/' . $filename,
+            'url'  => '/wp-content/plugins/theme-resources/assets/fonts/' . $filename,
         ];
     }
 
