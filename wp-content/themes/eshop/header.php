@@ -53,15 +53,16 @@
                         <nav id="site-navigation" class="main-navigation">
 
                             <div class="header-menu__inner">
-                                <a href="/" class="button toggle-menu">Каталог</a>
-                                <div class="header-menu">
-                                    <?php wp_nav_menu([
-                                        'container' => false,
-                                        'theme_location' => 'header_menu',
-                                        //'walker' => new Custom_Walker_Nav_Menu,
-                                        // 'depth' => 2,
-                                    ]); ?>
-                                </div>
+                                <a href="#catalog" class="button toggle-menu">Каталог</a>
+                                <!-- <div class="header-menu">
+                                    <?php //wp_nav_menu([
+                                    //'container' => false,
+                                    // 'theme_location' => 'header_menu',
+                                    //'walker' => new Custom_Walker_Nav_Menu,
+                                    // 'depth' => 2,
+                                    //]); 
+                                    ?>
+                                </div> -->
 
                             </div>
                             <div class="header-menu__inner">
