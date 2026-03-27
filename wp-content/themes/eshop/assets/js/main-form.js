@@ -1,27 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // === Fancybox (v4) + href="#main-form" ===
-    if (typeof Fancybox !== "undefined") {
-        Fancybox.bind("[data-fancybox]", { autoFocus: true });
-    }
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener("click", e => {
             const targetSelector = link.getAttribute("href");
             if (!targetSelector || targetSelector.length <= 1) return;
 
-            // Если это форма для Fancybox
+            const target = document.querySelector(targetSelector);
+
+            // === Fancybox ===
             if (targetSelector === "#main-form") {
                 e.preventDefault();
-                const target = document.querySelector(targetSelector);
-                if (target) {
-                    Fancybox.show([{ src: target, type: "inline" }]);
+
+                if (typeof Fancybox !== "undefined") {
+                    Fancybox.show([
+                        {
+                            src: targetSelector, // ← исправлено
+                            type: "inline"
+                        }
+                    ]);
                 }
-                return; // не запускать плавный скролл
+
+                return;
             }
 
-            // Для остальных якорей — плавный скролл
-            e.preventDefault();
-            smoothScrollToElement(targetSelector, 800);
+            // === Скролл ===
+            if (target) {
+                e.preventDefault();
+                smoothScrollToElement(targetSelector, 800);
+            }
         });
     });
+
 });

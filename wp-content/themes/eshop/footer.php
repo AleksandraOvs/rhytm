@@ -69,7 +69,7 @@
 ?>
 
 <div id="main-form" style="display:none;max-width:600px;">
-    sdsdsdsdsdsds
+    <?php get_template_part('template-parts/main-form'); ?>
 </div>
 
 

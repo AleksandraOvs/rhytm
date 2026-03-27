@@ -355,6 +355,93 @@ footer.footer .container .footer-bottom {
     padding-bottom: 50px;
 }
 
+/*MAIN FORM*/
+
+.contacts__list h3 {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.contacts-list__messengers {
+    display: flex;
+}
+
+.contacts-list__messengers .item__link {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all .5s linear;
+}
+
+.contacts-list__messengers .item__link:hover {
+    transform: scale(1.1);
+}
+
+.item__link img {
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+.contacts-list__messengers {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.phone__link span,
+.email__link span {
+    text-decoration: underline;
+    transition: all .4s linear;
+}
+
+.contacts__list>a {
+    font-size: 20px;
+    color: var(--theme-color-black);
+}
+
+.phone__link,
+.email__link {
+    display: flex;
+    margin-top: 10px;
+    font-weight: 500;
+    gap: 10px;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.phone__link:hover span,
+.email__link:hover span {
+    color: var(--theme-color-accent);
+}
+
+.phone__link .contact-icon svg path,
+.email__link .contact-icon svg path {
+    transition: all .5s linear;
+}
+
+/* .phone__link:hover .contact-icon svg path,
+.email__link:hover .contact-icon svg path {
+    fill: var(--theme-color-black);
+} */
+
+.contact-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.contact-icon svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
 @media (max-width: 1200px) {
     .container {
         width: 100%;
