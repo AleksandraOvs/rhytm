@@ -365,6 +365,7 @@ p.hero-desc {
 @media(max-width: 480px) {
     .wp-block-columns.hero-block.container {
         padding-bottom: 230px;
+        padding-top: 4em;
     }
 
     .wp-block-group.hero-buttons>div {
