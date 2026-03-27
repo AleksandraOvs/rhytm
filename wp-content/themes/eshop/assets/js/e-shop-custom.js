@@ -56,4 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         });
     });
+
+    function smoothScrollToTop(duration = 700) {
+        const element = document.scrollingElement || document.documentElement;
+        const start = element.scrollTop;
+        const change = -start;
+        const startTime = performance.now();
+
+        function animate(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            element.scrollTop = start + change * easeInOutQuad(progress);
+            if (elapsed < duration) requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+    }
+
 });
