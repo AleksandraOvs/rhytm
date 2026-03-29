@@ -3,7 +3,7 @@
 Plugin Name: Theme Resources
 Description: Подключение основных ресурсов темы (Swiper, Fancybox, Typography, Carbon Fields).
 Version: 1.0
-Author: Шурочка
+Author: Shura
 */
 
 if (!defined('ABSPATH')) {

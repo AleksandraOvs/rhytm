@@ -293,3 +293,21 @@ add_action('wp_head', function () {
         }
     }
 });
+
+// ==============================
+// 9. Подключение CSS в админке
+// ==============================
+add_action('admin_enqueue_scripts', function () {
+
+    $upload_dir = wp_upload_dir();
+    $css_file = $upload_dir['basedir'] . '/theme-resources/fonts.css';
+
+    if (file_exists($css_file)) {
+        wp_enqueue_style(
+            'theme-fonts-admin',
+            $upload_dir['baseurl'] . '/theme-resources/fonts.css',
+            [],
+            filemtime($css_file)
+        );
+    }
+});
