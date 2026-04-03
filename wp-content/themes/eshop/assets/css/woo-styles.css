@@ -329,6 +329,17 @@ h2.category-heading:after {
     gap: 10px;
 }
 
+.products.columns-3 {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.woocommerce ul.products.columns-3 li.product,
+.woocommerce-page ul.products.columns-3 li.product {
+    width: 100%;
+}
+
 /*QTY*/
 
 .summary.entry-summary form.cart {
