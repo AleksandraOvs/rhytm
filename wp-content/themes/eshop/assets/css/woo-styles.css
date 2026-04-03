@@ -12,6 +12,7 @@ main.site-main {
     margin-top: 0;
     overflow-x: hidden;
     padding-top: 70px;
+    padding-bottom: 70px;
 }
 
 .woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) #respond input#submit,
