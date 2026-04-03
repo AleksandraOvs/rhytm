@@ -31,7 +31,9 @@ do_action('woocommerce_before_main_content');
         // Архив товаров с категориями и якорями
         // ----------------------------
         if (is_shop() || is_product_taxonomy()) {
+
             $parent_id = 0;
+
             if (is_product_taxonomy()) {
                 $current = get_queried_object();
                 $parent_id = $current->term_id;
@@ -39,12 +41,14 @@ do_action('woocommerce_before_main_content');
 
             // Получаем категории
             $categories = get_terms([
-                'taxonomy' => 'product_cat',
-                'parent' => $parent_id,
+                'taxonomy'   => 'product_cat',
+                'parent'     => $parent_id,
                 'hide_empty' => true,
             ]);
 
-            // Верхняя сетка категорий с якорями
+            // ----------------------------
+            // Сетка категорий (якоря)
+            // ----------------------------
             if (!empty($categories) && !is_wp_error($categories)) {
                 echo '<div class="categories-grid">';
                 foreach ($categories as $cat) {
@@ -58,25 +62,46 @@ do_action('woocommerce_before_main_content');
                 echo '</div>';
             }
 
+            // ----------------------------
             // Товары по категориям
+            // ----------------------------
             if (!empty($categories)) {
+
                 foreach ($categories as $cat) {
+
                     $products = wc_get_products([
-                        'status' => 'publish',
-                        'limit' => -1,
+                        'status'   => 'publish',
+                        'limit'    => -1,
                         'category' => [$cat->slug],
                     ]);
 
                     if (!empty($products)) {
-                        $anchor = 'cat-' . $cat->term_id;
-                        echo '<h2 id="' . esc_attr($anchor) . '" class="category-heading">' . esc_html($cat->name) . '</h2>';
-                        echo '<ul class="products">';
 
-                        foreach ($products as $product) {
-                            wc_get_template_part('content', 'product', ['product' => $product]);
+                        $anchor = 'cat-' . $cat->term_id;
+
+                        echo '<h2 id="' . esc_attr($anchor) . '" class="category-heading">' . esc_html($cat->name) . '</h2>';
+
+                        // ВАЖНО: стандартный wrapper WooCommerce
+                        woocommerce_product_loop_start();
+
+                        global $product;
+
+                        foreach ($products as $product_obj) {
+
+                            $product = $product_obj; // 👉 подменяем глобальный продукт
+
+                            // Если вдруг нужен post (редко, но бывает полезно)
+                            if ($product->get_id()) {
+                                $post_object = get_post($product->get_id());
+                                setup_postdata($GLOBALS['post'] = &$post_object);
+                            }
+
+                            wc_get_template_part('content', 'product');
                         }
 
-                        echo '</ul>';
+                        wp_reset_postdata();
+
+                        woocommerce_product_loop_end();
                     }
                 }
             }
