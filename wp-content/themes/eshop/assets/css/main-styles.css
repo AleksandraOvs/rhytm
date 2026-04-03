@@ -18,7 +18,7 @@ h2 {
 h1 {
     font-size: 50px;
     margin: 0;
-    margin-bottom: 40px;
+    margin-bottom: 1em;
 }
 
 h2 {
@@ -215,7 +215,7 @@ figure.wp-block-image img {
 }
 
 .breadcrumbs__list a:hover {
-    color: #fff;
+    color: var(--theme-color-accent);
 }
 
 .breadcrumbs__list a,

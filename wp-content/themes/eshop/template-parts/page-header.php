@@ -1,14 +1,9 @@
 <!-- Start Page Header Wrapper -->
 <div class="page-header-wrapper">
     <div class="container">
-        <?php
-        /**
-         * Уведомления, результаты поиска и т.д.
-         */
-        do_action('woocommerce_before_main_content');
-        ?>
-
         <?php site_breadcrumbs() ?>
+
+        <?php get_template_part('template-parts/titles') ?>
     </div>
 </div>
 <!-- End Page Header Wrapper -->

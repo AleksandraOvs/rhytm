@@ -15,6 +15,16 @@ include_once(trailingslashit(get_stylesheet_directory()) . 'lib/custom-config.ph
 
 add_action('wp_enqueue_scripts', 'e_shop_enqueue_styles');
 
+function mytheme_add_woocommerce_support()
+{
+    add_theme_support('woocommerce');
+}
+add_action('after_setup_theme', 'mytheme_add_woocommerce_support');
+
+//add_theme_support('wc-product-gallery-zoom');
+add_theme_support('wc-product-gallery-lightbox');
+add_theme_support('wc-product-gallery-slider');
+
 function e_shop_enqueue_styles()
 {
 
@@ -24,27 +34,17 @@ function e_shop_enqueue_styles()
     wp_enqueue_style('toggle-contacts-styles', get_template_directory_uri() . '/assets/css/toggle-contacts.css');
     wp_enqueue_style('faq-styles', get_template_directory_uri() . '/assets/css/faq.css');
     wp_enqueue_style('mob-menu-styles', get_template_directory_uri() . '/assets/css/mobile-menu.css');
+    wp_enqueue_style('woo-styles', get_template_directory_uri() . '/assets/css/woo-styles.css');
 
     //wp_enqueue_style('e-shop-styles', get_stylesheet_directory_uri());
 
     wp_enqueue_script('e-shop-custom-script', get_stylesheet_directory_uri() . '/assets/js/e-shop-custom.js', array('jquery'), '1.0.1', true);
     wp_enqueue_script('nav-script', get_stylesheet_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true);
     wp_enqueue_script('main-form-script', get_stylesheet_directory_uri() . '/assets/js/main-form.js', array(), _S_VERSION, true);
+    wp_enqueue_script('woo-script', get_stylesheet_directory_uri() . '/assets/js/woo-scripts.js', array(), _S_VERSION, true);
     wp_enqueue_script('toggle-contacts-script', get_stylesheet_directory_uri() . '/assets/js/toggle-contacts.js', array(), _S_VERSION, true);
     wp_enqueue_script('faq-script', get_stylesheet_directory_uri() . '/assets/js/faq.js', array(), _S_VERSION, true);
 }
-
-function mytheme_add_woocommerce_support()
-{
-    add_theme_support('woocommerce');
-}
-add_action('after_setup_theme', 'mytheme_add_woocommerce_support');
-
-add_theme_support('wc-product-gallery-zoom');
-add_theme_support('wc-product-gallery-lightbox');
-add_theme_support('wc-product-gallery-slider');
-
-
 
 // add_action('wp_enqueue_scripts', function () {
 //     wp_enqueue_style(
@@ -242,3 +242,11 @@ add_action('manage_product_cat_custom_column', function ($content, $column, $ter
 add_action('init', function () {
     remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 });
+
+
+// Меняем надпись "On Sale" на свою
+add_filter('woocommerce_sale_flash', function ($html, $post, $product) {
+    // Новый текст
+    $new_text = '%'; // <- здесь меняем надпись
+    return '<span class="onsale">' . esc_html($new_text) . '</span>';
+}, 10, 3);
