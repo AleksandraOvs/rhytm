@@ -33,23 +33,25 @@ do_action('woocommerce_before_main_content');
         if (is_shop() || is_product_taxonomy()) {
 
             $parent_id = 0;
+            $current_cat = null;
 
             if (is_product_taxonomy()) {
-                $current = get_queried_object();
-                $parent_id = $current->term_id;
+                $current_cat = get_queried_object();
+                $parent_id = $current_cat->term_id;
             }
 
-            // Получаем категории
+            // Получаем ДОЧЕРНИЕ категории
             $categories = get_terms([
                 'taxonomy'   => 'product_cat',
                 'parent'     => $parent_id,
                 'hide_empty' => true,
             ]);
 
-            // ----------------------------
-            // Сетка категорий (якоря)
-            // ----------------------------
+            // ============================
+            // ЕСЛИ есть подкатегории
+            // ============================
             if (!empty($categories) && !is_wp_error($categories)) {
+
                 echo '<div class="categories-grid">';
                 foreach ($categories as $cat) {
                     $anchor = 'cat-' . $cat->term_id;
@@ -60,12 +62,6 @@ do_action('woocommerce_before_main_content');
         <?php
                 }
                 echo '</div>';
-            }
-
-            // ----------------------------
-            // Товары по категориям
-            // ----------------------------
-            if (!empty($categories)) {
 
                 foreach ($categories as $cat) {
 
@@ -81,16 +77,14 @@ do_action('woocommerce_before_main_content');
 
                         echo '<h2 id="' . esc_attr($anchor) . '" class="category-heading">' . esc_html($cat->name) . '</h2>';
 
-                        // ВАЖНО: стандартный wrapper WooCommerce
                         woocommerce_product_loop_start();
 
                         global $product;
 
                         foreach ($products as $product_obj) {
 
-                            $product = $product_obj; // 👉 подменяем глобальный продукт
+                            $product = $product_obj;
 
-                            // Если вдруг нужен post (редко, но бывает полезно)
                             if ($product->get_id()) {
                                 $post_object = get_post($product->get_id());
                                 setup_postdata($GLOBALS['post'] = &$post_object);
@@ -102,6 +96,44 @@ do_action('woocommerce_before_main_content');
                         wp_reset_postdata();
 
                         woocommerce_product_loop_end();
+                    }
+                }
+            } else {
+                // ============================
+                // НЕТ подкатегорий → показываем товары текущей категории
+                // ============================
+
+                if (is_product_taxonomy() && $current_cat) {
+
+                    $products = wc_get_products([
+                        'status'   => 'publish',
+                        'limit'    => -1,
+                        'category' => [$current_cat->slug],
+                    ]);
+
+                    if (!empty($products)) {
+
+                        woocommerce_product_loop_start();
+
+                        global $product;
+
+                        foreach ($products as $product_obj) {
+
+                            $product = $product_obj;
+
+                            if ($product->get_id()) {
+                                $post_object = get_post($product->get_id());
+                                setup_postdata($GLOBALS['post'] = &$post_object);
+                            }
+
+                            wc_get_template_part('content', 'product');
+                        }
+
+                        wp_reset_postdata();
+
+                        woocommerce_product_loop_end();
+                    } else {
+                        echo '<p>Товары не найдены</p>';
                     }
                 }
             }
