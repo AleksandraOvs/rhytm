@@ -172,6 +172,8 @@ div#minicart-popup .close svg {
     margin: 0;
     line-height: 1;
     text-align: left;
+    font-size: 18px;
+    color: var(--theme-color-secondary);
 }
 
 .prod-cal .price-base {
