@@ -96,6 +96,7 @@
 div#minicart-popup .close {
     width: 20px;
     height: 20px;
+    cursor: pointer;
     position: absolute;
     opacity: 1;
     top: 20px;
@@ -103,10 +104,15 @@ div#minicart-popup .close {
     padding: 0;
     background: transparent;
     border: none;
+    transition: all .5s ease-in-out;
+}
+
+div#minicart-popup .close svg path {
+    transition: all .5s ease-in-out;
 }
 
 div#minicart-popup .close:hover svg path {
-    stroke: var(--theme-color-primary);
+    stroke: var(--theme-color-accent);
 }
 
 div#minicart-popup .close svg {
@@ -265,13 +271,14 @@ div#minicart-popup .close svg {
     gap: 20px;
 }
 
-.woocommerce-mini-cart__total.total strong {
-    display: none;
+.woocommerce-mini-cart__total.total {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .woocommerce-mini-cart__total.total span,
 .woocommerce-mini-cart__total.total span bdi {
-    margin-top: 10px;
     display: inline-block;
     flex-direction: row;
     color: var(--theme-color-accent);

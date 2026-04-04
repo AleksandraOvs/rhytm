@@ -97,14 +97,14 @@ do_action('woocommerce_before_mini_cart'); ?>
 
             do_action('woocommerce_mini_cart_contents');
             ?>
-            <p class="woocommerce-mini-cart__total total">
-                <?php do_action('woocommerce_widget_shopping_cart_total'); ?>
-            </p>
         </ul>
 
         <div class="woocommerce-mini-cart__footer">
 
 
+            <p class="woocommerce-mini-cart__total total">
+                <?php do_action('woocommerce_widget_shopping_cart_total'); ?>
+            </p>
             <div class="minicart-btn-group">
                 <a href="<?php echo wc_get_checkout_url(); ?>" class="button">Оформление заказа</a>
                 <a href="<?php echo wc_get_cart_url(); ?>" class="link">Просмотр корзины</a>
