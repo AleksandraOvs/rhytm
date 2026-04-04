@@ -72,6 +72,22 @@
     <?php get_template_part('template-parts/main-form'); ?>
 </div>
 
+<?php if (!is_cart()) : ?>
+    <!--== Start Mini Cart Wrapper ==-->
+    <div id="minicart-popup">
+        <button class="close">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.75 11.236L5.993 5.993L11.236 11.236M11.236 0.75L5.992 5.993L0.75 0.75" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+
+
+        <?php woocommerce_mini_cart()
+        ?>
+    </div>
+    <!--== End Mini Cart Wrapper ==-->
+
+<?php endif; ?>
 
 
 <?php wp_footer(); ?>

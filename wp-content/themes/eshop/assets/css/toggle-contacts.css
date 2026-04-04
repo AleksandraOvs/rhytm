@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 500;
+    z-index: 99;
 }
 
 .toggle-contacts-icon {
@@ -173,4 +173,18 @@
 .toggle-contacts__bar.active .toggle-contacts__list__item {
     opacity: 1;
     transform: translateY(0);
+}
+
+.minicart-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.minicart-btn-group a.button {
+    width: 100%;
+    max-width: 100%;
+    text-align: Center;
+    padding: 5px;
 }

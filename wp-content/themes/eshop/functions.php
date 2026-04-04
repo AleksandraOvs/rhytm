@@ -34,6 +34,7 @@ function e_shop_enqueue_styles()
     wp_enqueue_style('toggle-contacts-styles', get_template_directory_uri() . '/assets/css/toggle-contacts.css');
     wp_enqueue_style('faq-styles', get_template_directory_uri() . '/assets/css/faq.css');
     wp_enqueue_style('mob-menu-styles', get_template_directory_uri() . '/assets/css/mobile-menu.css');
+    wp_enqueue_style('mini-cart-styles', get_template_directory_uri() . '/assets/css/mini-cart.css');
     wp_enqueue_style('woo-styles', get_template_directory_uri() . '/assets/css/woo-styles.css');
 
     //wp_enqueue_style('e-shop-styles', get_stylesheet_directory_uri());
@@ -44,6 +45,7 @@ function e_shop_enqueue_styles()
     wp_enqueue_script('woo-script', get_stylesheet_directory_uri() . '/assets/js/woo-scripts.js', array(), _S_VERSION, true);
     wp_enqueue_script('toggle-contacts-script', get_stylesheet_directory_uri() . '/assets/js/toggle-contacts.js', array(), _S_VERSION, true);
     wp_enqueue_script('faq-script', get_stylesheet_directory_uri() . '/assets/js/faq.js', array(), _S_VERSION, true);
+    wp_enqueue_script('minicart-script', get_stylesheet_directory_uri() . '/assets/js/mini-cart-scripts.js', array(), _S_VERSION, true);
 }
 
 // add_action('wp_enqueue_scripts', function () {
@@ -205,6 +207,7 @@ require get_stylesheet_directory() . '/inc/breadcrumbs.php';
 require get_stylesheet_directory() . '/inc/views.php';
 require get_stylesheet_directory() . '/inc/gutenberg-customs.php';
 require get_stylesheet_directory() . '/inc/carbon-fields.php';
+require get_stylesheet_directory() . '/inc/woo.php';
 
 /*
  * модуль загрузки шрифтов

@@ -47,3 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.body.addEventListener('added_to_cart', function (e) {
+    const button = e.detail?.button;
+
+    if (!button) return;
+
+    button.textContent = 'В корзине';
+    button.classList.add('in-cart');
+    button.disabled = true;
+});

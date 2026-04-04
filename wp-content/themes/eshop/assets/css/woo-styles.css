@@ -201,6 +201,8 @@ del .woocommerce-Price-amount.amount bdi {
     aspect-ratio: 3/4;
     overflow: hidden;
     border-radius: 20px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .product .summary.entry-summary {
