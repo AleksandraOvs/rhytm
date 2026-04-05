@@ -209,6 +209,7 @@ require get_stylesheet_directory() . '/inc/gutenberg-customs.php';
 require get_stylesheet_directory() . '/inc/carbon-fields.php';
 require get_stylesheet_directory() . '/inc/woo.php';
 
+
 /*
  * модуль загрузки шрифтов
  */

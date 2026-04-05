@@ -45,4 +45,17 @@ function site_carbon()
                 ->set_width(50)
                 ->help_text('для вызова попап окна, необходимо поставить ссылку #main-form'),
         ));
+
+    //prefooter
+    Container::make('theme_options', 'Настройки темы')
+        ->add_fields([
+            Field::make('association', 'footer_page', 'Выбор шаблона для префутера')
+                ->set_types([
+                    [
+                        'type' => 'post',
+                        'post_type' => 'page',
+                    ]
+                ])
+                ->help_text('Выбор из имеющихся блоков (в разделе "Страницы") для вывода префутера - отображается на всех страницах сайта, кросе главной и страницы оформления заказа перед футером')
+        ]);
 }

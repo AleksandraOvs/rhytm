@@ -6,6 +6,20 @@
         ?>
     </div>
 <?php } ?>
+
+<!-- prefooter -->
+<?php
+if (!is_front_page() && !is_checkout()) {
+
+    $footer_page = carbon_get_theme_option('footer_page');
+
+    if (!empty($footer_page)) {
+        $page_id = $footer_page[0]['id'];
+        echo apply_filters('the_content', get_post_field('post_content', $page_id));
+    }
+}
+?>
+
 <footer id="colophon" class="footer" role="contentinfo">
     <div class="container">
 
