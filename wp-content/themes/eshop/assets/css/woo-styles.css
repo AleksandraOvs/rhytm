@@ -54,7 +54,6 @@ main.site-main {
 .woocommerce div.product div.images,
 .woocommerce-page #content div.product div.images,
 .woocommerce-page div.product div.images {
-    float: left;
     width: 30%;
 }
 
@@ -62,7 +61,6 @@ main.site-main {
 .woocommerce div.product div.summary,
 .woocommerce-page #content div.product div.summary,
 .woocommerce-page div.product div.summary {
-    float: right;
     width: calc(70% - 2em);
     clear: none;
 }
@@ -133,6 +131,11 @@ del .woocommerce-Price-amount.amount bdi {
     font-size: 12px;
     color: #fff;
     padding: 5px;
+}
+
+.product.sale .entry-summary .price {
+    flex-direction: row-reverse;
+    display: flex;
 }
 
 .woocommerce div.product p.price ins,
@@ -206,9 +209,18 @@ del .woocommerce-Price-amount.amount bdi {
 }
 
 .product .summary.entry-summary {
+    float: none !important;
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.woocommerce div.product {
+    margin-bottom: 0;
+    position: relative;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .woocommerce div.product div.images img {
@@ -439,4 +451,28 @@ h2.category-heading:after {
     transform: scale(1.0161);
     background: #000;
     color: #fff;
+}
+
+/*PRODUCT ATTRIBUTES*/
+
+.product-attributes h3,
+.product-description h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.woocommerce-product-attributes__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.woocommerce-product-attributes__item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #fff;
 }
