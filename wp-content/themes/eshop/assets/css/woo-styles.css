@@ -503,4 +503,9 @@ h2.category-heading:after {
         color: var(--theme-color-accent);
     }
 
+    .products.columns-3 {
+        gap: 40px;
+        grid-template-columns: 1fr;
+    }
+
 }
