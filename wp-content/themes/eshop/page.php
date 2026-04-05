@@ -1,7 +1,7 @@
 <?php get_header() ?>
-<section class="page">
+<section class="page-content">
     <?php get_template_part('template-parts/page-header'); ?>
-    <div class="page-content">
+    <div class="content">
         <div class="container">
             <?php the_content(); ?>
         </div>
