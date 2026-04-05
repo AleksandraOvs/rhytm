@@ -503,4 +503,8 @@ h2.category-heading:after {
         color: var(--theme-color-accent);
     }
 
+    main.site-main {
+        padding-top: 50px;
+    }
+
 }
