@@ -476,3 +476,31 @@ h2.category-heading:after {
     padding-bottom: 5px;
     border-bottom: 1px dotted #fff;
 }
+
+@media (max-width: 768px) {
+    .products.columns-3 {
+        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        flex-direction: column;
+        margin-top: 1em;
+    }
+
+    .category-item__link {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 0px;
+        border-bottom: 1px dotted #fff;
+        border-bottom-color: rgb(255, 255, 255);
+    }
+
+    .category-item__link:hover {
+        background: transparent;
+        color: var(--theme-color-accent);
+    }
+
+}
