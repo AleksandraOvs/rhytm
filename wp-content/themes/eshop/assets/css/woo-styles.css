@@ -621,5 +621,9 @@ h2.category-heading:after {
         font-size: 14px;
     }
 
+    .woocommerce ul.products li.product .button {
+        padding: 10px;
+    }
+
 
 }
