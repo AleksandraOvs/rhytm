@@ -137,13 +137,9 @@ do_action('woocommerce_before_main_content');
                     }
                 }
             }
-        } elseif (is_product()) {
-            // Одиночный товар
-            wc_get_template('single-product.php');
         } else {
             // Для других страниц WooCommerce (cart, checkout, account)
             woocommerce_content();
-            echo 'woocommerce content';
         }
         ?>
     </div>

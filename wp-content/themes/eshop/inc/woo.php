@@ -79,3 +79,6 @@ function add_content_after_product_meta()
 
     echo '</div>';
 }
+
+//убрать название товара на странице
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);

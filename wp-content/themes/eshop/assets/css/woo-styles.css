@@ -133,9 +133,15 @@ del .woocommerce-Price-amount.amount bdi {
     padding: 5px;
 }
 
-.product.sale .entry-summary .price {
+.product-inner__content .price {
     flex-direction: row-reverse;
+    display: flex !important;
+}
+
+.product-inner__content {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .woocommerce div.product p.price ins,
@@ -169,7 +175,9 @@ del .woocommerce-Price-amount.amount bdi {
     right: -30px;
     width: max-content;
 } */
-
+.woocommerce-page__content .container .product {
+    margin-top: 40px;
+}
 
 .woocommerce ul.products li.product .price {
     display: block;
@@ -193,6 +201,27 @@ del .woocommerce-Price-amount.amount bdi {
     width: 100%;
     max-width: 100%;
     text-align: center;
+}
+
+.product-inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+}
+
+.product-inner__images {
+    position: relative;
+}
+
+h1.product-title {
+    font-size: 35px;
+    margin-bottom: 20px;
+    line-height: 120%;
+    font-weight: 600;
+}
+
+.woocommerce .product-inner>.product-inner__images .woocommerce-product-gallery {
+    width: 100%;
 }
 
 .woocommerce ul.products li.product a img {
@@ -357,13 +386,13 @@ h2.category-heading:after {
 
 /*QTY*/
 
-.summary.entry-summary form.cart {
+.product-inner__content form.cart {
     display: flex;
     gap: 20px;
     align-items: center;
 }
 
-.woocommerce div.product form.cart div.quantity {
+.product-inner__content form.cart div.quantity {
     float: none;
     margin: 0;
     display: flex;
@@ -466,15 +495,52 @@ h2.category-heading:after {
 .woocommerce-product-attributes__list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
 
 .woocommerce-product-attributes__item {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     border-bottom: 1px dotted #fff;
+}
+
+/*NOTICES*/
+.woocommerce-notices-wrapper {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 100%;
+    max-width: 400px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+}
+
+.woocommerce-message {
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px 20px 40px;
+    transition: all .5s linear;
+    margin: 0;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 140%;
+}
+
+.woocommerce-message a.button.wc-forward {
+    display: block;
+    background: transparent;
+    color: var(--theme-color-accent);
+    font-size: 14px;
+    padding: 7px 10px;
+    left: 0;
+    float: none;
+    margin-top: 10px;
 }
 
 @media (max-width: 768px) {
@@ -482,6 +548,47 @@ h2.category-heading:after {
         gap: 10px;
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* .product-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        width: 100%;
+    }
+
+    .product-inner__images {
+        position: relative;
+        width: 100%;
+    }
+
+    .woocommerce div.product div.images.woocommerce-product-gallery {
+        position: relative;
+        display: flex;
+        gap: 20px;
+    }
+
+    .woocommerce div.product div.images.woocommerce-product-gallery .flex-viewport {
+        width: calc(100% - 80px);
+    }
+
+    .woocommerce div.product div.images .flex-control-thumbs {
+        width: 60px;
+        flex-direction: column;
+    } */
+
+    .product-inner {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* 
+    .woocommerce .product-inner>.product-inner__images .woocommerce-product-gallery {
+        width: 100%;
+        height: 400px;
+    }
+
+    .woocommerce .product-inner>.product-inner__images .woocommerce-product-gallery .flex-viewport {} */
+
 }
 
 @media (max-width: 480px) {
@@ -503,9 +610,9 @@ h2.category-heading:after {
         color: var(--theme-color-accent);
     }
 
-    .products.columns-3 {
+    /* .products.columns-3 {
         gap: 40px;
         grid-template-columns: 1fr;
-    }
+    } */
 
 }

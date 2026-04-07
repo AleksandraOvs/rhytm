@@ -46,6 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 400);
         }
     });
+
+    /* ===============================
+      WOOCOMMERCE MESSAGE AUTO-HIDE
+   =============================== */
+
+    document.addEventListener('click', e => {
+        document.querySelectorAll('.woocommerce-message').forEach(msg => {
+            if (!msg.contains(e.target)) {
+                msg.classList.add('fade-out');
+                setTimeout(() => msg.remove(), 700);
+            }
+        });
+    });
 });
 
 document.body.addEventListener('added_to_cart', function (e) {
