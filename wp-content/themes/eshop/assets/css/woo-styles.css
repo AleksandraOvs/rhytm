@@ -615,4 +615,11 @@ h2.category-heading:after {
         grid-template-columns: 1fr;
     } */
 
+    .woocommerce ul.products li.product .woocommerce-loop-product__title {
+        padding: .5em 0;
+        margin: 0;
+        font-size: 14px;
+    }
+
+
 }
