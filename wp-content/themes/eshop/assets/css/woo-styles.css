@@ -461,6 +461,16 @@ h2.category-heading:after {
     gap: 20px;
 }
 
+button.single_add_to_cart_button.button.alt.disabled {
+    background: rgba(0, 0, 0, .5);
+    border-color: #000;
+}
+
+button.single_add_to_cart_button.button.alt.disabled:hover {
+    background: rgba(0, 0, 0, .5);
+    border-color: #000;
+}
+
 .wc-block-components-button.wp-element-button.wc-block-cart__submit-button {
     background-color: var(--theme-color-accent);
     border-width: 0;
