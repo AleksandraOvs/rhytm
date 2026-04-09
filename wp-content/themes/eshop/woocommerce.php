@@ -27,116 +27,101 @@ do_action('woocommerce_before_main_content');
     <?php get_template_part('template-parts/page-header') ?>
     <div class="container">
         <?php
-        // ----------------------------
-        // Архив товаров с категориями и якорями
-        // ----------------------------
-        if (is_shop() || is_product_taxonomy()) {
+        if (is_shop()) {
 
-            $parent_id = 0;
-            $current_cat = null;
+            echo do_shortcode('[shop_filters]');
 
-            if (is_product_taxonomy()) {
-                $current_cat = get_queried_object();
-                $parent_id = $current_cat->term_id;
+            // Получаем родительские категории (только верхний уровень)
+            $categories = get_terms([
+                'taxonomy'   => 'product_cat',
+                'parent'     => 0,
+                'hide_empty' => true,
+            ]);
+
+            if (!empty($categories) && !is_wp_error($categories)) {
+                echo '<div class="categories-grid">';
+                foreach ($categories as $cat) {
+                    $cat_link = get_term_link($cat);
+                    if (!is_wp_error($cat_link)) {
+        ?>
+                        <a class="category-item__link" href="<?php echo esc_url($cat_link); ?>">
+                            <div class="category-title hover-effect"><?php echo esc_html($cat->name); ?></div>
+                        </a>
+                <?php
+                    }
+                }
+                echo '</div>';
             }
 
-            // Получаем ДОЧЕРНИЕ категории
+            // Показываем все товары
+            $args = [
+                'post_type'      => 'product',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+            ];
+            $products = new WP_Query($args);
+
+            if ($products->have_posts()) : ?>
+                <ul class="products">
+                    <?php while ($products->have_posts()) : $products->the_post(); ?>
+                        <?php wc_get_template_part('content', 'product'); ?>
+                    <?php endwhile; ?>
+                </ul>
+                <?php endif;
+            wp_reset_postdata();
+        } elseif (is_product_taxonomy()) {
+
+            $current_cat = get_queried_object();
+            $parent_id = $current_cat->term_id;
+
+            // Получаем дочерние категории
             $categories = get_terms([
                 'taxonomy'   => 'product_cat',
                 'parent'     => $parent_id,
                 'hide_empty' => true,
             ]);
 
-            // ============================
-            // ЕСЛИ есть подкатегории
-            // ============================
+            echo do_shortcode('[shop_filters]');
             if (!empty($categories) && !is_wp_error($categories)) {
-
                 echo '<div class="categories-grid">';
                 foreach ($categories as $cat) {
-                    $anchor = 'cat-' . $cat->term_id;
-        ?>
-                    <a class="category-item__link" href="#<?php echo esc_attr($anchor); ?>">
-                        <div class="category-title hover-effect"><?php echo esc_html($cat->name); ?></div>
-                    </a>
-        <?php
+                    $cat_link = get_term_link($cat);
+                    if (!is_wp_error($cat_link)) {
+                ?>
+                        <a class="category-item__link" href="<?php echo esc_url($cat_link); ?>">
+                            <div class="category-title hover-effect"><?php echo esc_html($cat->name); ?></div>
+                        </a>
+                <?php
+                    }
                 }
                 echo '</div>';
-
-                foreach ($categories as $cat) {
-
-                    $products = wc_get_products([
-                        'status'   => 'publish',
-                        'limit'    => -1,
-                        'category' => [$cat->slug],
-                    ]);
-
-                    if (!empty($products)) {
-
-                        $anchor = 'cat-' . $cat->term_id;
-
-                        echo '<h2 id="' . esc_attr($anchor) . '" class="category-heading">' . esc_html($cat->name) . '</h2>';
-
-                        woocommerce_product_loop_start();
-
-                        global $product;
-
-                        foreach ($products as $product_obj) {
-
-                            $product = $product_obj;
-
-                            if ($product->get_id()) {
-                                $post_object = get_post($product->get_id());
-                                setup_postdata($GLOBALS['post'] = &$post_object);
-                            }
-
-                            wc_get_template_part('content', 'product');
-                        }
-
-                        wp_reset_postdata();
-
-                        woocommerce_product_loop_end();
-                    }
-                }
-            } else {
-                // ============================
-                // НЕТ подкатегорий → показываем товары текущей категории
-                // ============================
-
-                if (is_product_taxonomy() && $current_cat) {
-
-                    $products = wc_get_products([
-                        'status'   => 'publish',
-                        'limit'    => -1,
-                        'category' => [$current_cat->slug],
-                    ]);
-
-                    if (!empty($products)) {
-
-                        woocommerce_product_loop_start();
-
-                        global $product;
-
-                        foreach ($products as $product_obj) {
-
-                            $product = $product_obj;
-
-                            if ($product->get_id()) {
-                                $post_object = get_post($product->get_id());
-                                setup_postdata($GLOBALS['post'] = &$post_object);
-                            }
-
-                            wc_get_template_part('content', 'product');
-                        }
-
-                        wp_reset_postdata();
-
-                        woocommerce_product_loop_end();
-                    } else {
-                        echo '<p>Товары не найдены</p>';
-                    }
-                }
             }
+
+            // Показываем товары текущей категории
+            $args = [
+                'post_type'      => 'product',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC',
+                'tax_query'      => [
+                    [
+                        'taxonomy' => 'product_cat',
+                        'field'    => 'term_id',
+                        'terms'    => $current_cat->term_id,
+                    ]
+                ],
+            ];
+            $products = new WP_Query($args);
+
+            if ($products->have_posts()) : ?>
+                <ul class="products">
+                    <?php while ($products->have_posts()) : $products->the_post(); ?>
+                        <?php wc_get_template_part('content', 'product'); ?>
+                    <?php endwhile; ?>
+                </ul>
+        <?php endif;
+            wp_reset_postdata();
         } else {
             // Для других страниц WooCommerce (cart, checkout, account)
             woocommerce_content();

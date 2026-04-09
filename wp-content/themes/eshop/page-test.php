@@ -5,51 +5,68 @@
  */
 
 get_header() ?>
+<h1>njdfhs b fnhb,ens</h1>
+<?php
 
-<a href="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider1.jpg" data-fancybox="gallery">
-    <img src="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider1.jpg">
-</a>
+$args = [
+    'post_type'      => 'product',
+    'posts_per_page' => 20,
+];
 
-<div
-    class="swiper js-swiper"
-    data-slides="1.4"
-    data-space="30"
-    data-loop="true"
-    data-speed="800"
-    data-breakpoints='{
-         "768": {"slidesPerView": 2.2, "spaceBetween": 20},
-         "1024": {"slidesPerView": 3, "spaceBetween": 30},
-         "1200": {"slidesPerView": 4, "spaceBetween": 40}
-     }'>
+$query = new WP_Query($args);
 
-    <div class="swiper-wrapper">
+if ($query->have_posts()) {
 
-        <div class="swiper-slide">
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider1.jpg" alt="">
-        </div>
+    echo '<h2>DEBUG ТОВАРЫ</h2>';
 
-        <div class="swiper-slide">
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider2.jpg" alt="">
-        </div>
+    while ($query->have_posts()) {
+        $query->the_post();
 
-        <div class="swiper-slide">
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider1.jpg" alt="">
-        </div>
+        $product = wc_get_product(get_the_ID());
 
-        <div class="swiper-slide">
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/demo/slider2.jpg" alt="">
-        </div>
+        echo '<div style="border:1px solid #000; padding:10px; margin-bottom:10px;">';
 
-    </div>
+        echo '<strong>ID:</strong> ' . get_the_ID() . '<br>';
+        echo '<strong>Название:</strong> ' . get_the_title() . '<br>';
 
-    <!-- Пагинация -->
-    <div class="swiper-pagination"></div>
+        $attributes = $product->get_attributes();
 
-    <!-- Кнопки -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+        if (!empty($attributes)) {
 
-</div>
+            echo '<strong>Атрибуты:</strong><br>';
 
+            foreach ($attributes as $attr_name => $attr) {
 
+                echo '<div style="margin-left:10px;">';
+                echo '<b>' . $attr_name . '</b>: ';
+
+                if ($attr->is_taxonomy()) {
+
+                    $terms = wp_get_post_terms($product->get_id(), $attr_name);
+
+                    $values = [];
+                    foreach ($terms as $term) {
+                        $values[] = $term->name . ' (' . $term->slug . ')';
+                    }
+
+                    echo implode(', ', $values);
+                } else {
+                    echo implode(', ', $attr->get_options());
+                }
+
+                echo '</div>';
+            }
+        } else {
+            echo 'Нет атрибутов';
+        }
+
+        echo '</div>';
+    }
+} else {
+    echo '<h2>❌ ТОВАРЫ НЕ НАЙДЕНЫ</h2>';
+}
+
+wp_reset_postdata();
+
+?>
 <?php get_footer() ?>
