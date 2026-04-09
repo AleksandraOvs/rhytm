@@ -114,14 +114,13 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
                             class="filter-item"
                             data-slug="<?php echo esc_attr($term->slug); ?>"
                             data-taxonomy="<?php echo esc_attr($taxonomy); ?>">
-                            <span class="filter-checkbox"></span>
+                            <!-- <span class="filter-checkbox"></span> -->
                             <?php echo esc_html($term->name); ?> <?php //echo $count; 
                                                                     ?>
                         </a>
                     </li>
 
                 <?php endforeach; ?>
-
             </ul>
         </div>
     </div>

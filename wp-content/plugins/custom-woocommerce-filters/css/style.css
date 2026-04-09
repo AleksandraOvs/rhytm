@@ -43,6 +43,7 @@ section.widget {
     display: flex;
     gap: 5px;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .sidebar-list li a {
@@ -50,9 +51,15 @@ section.widget {
     color: #fff;
     display: inline-block;
     cursor: pointer;
-    padding: 3px 10px;
+    padding: 3px 5px;
     border: 1px solid var(--theme-color-secondary);
     border-radius: 5px;
+    font-size: 14px;
+    width: max-content;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sidebar-list li a.active {
