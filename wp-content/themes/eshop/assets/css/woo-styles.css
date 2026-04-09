@@ -529,8 +529,8 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 /*NOTICES*/
 .woocommerce-notices-wrapper {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 10px;
+    left: 5px;
     width: 100%;
     max-width: 400px;
     z-index: 100;
@@ -540,6 +540,19 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 }
 
 .woocommerce-message {
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px 20px 40px;
+    transition: all .5s linear;
+    margin: 0;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 140%;
+}
+
+.woocommerce-error {
     background: rgba(0, 0, 0, .75);
     backdrop-filter: blur(10px);
     padding: 10px 20px 20px 40px;
@@ -648,6 +661,18 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
         padding: .5em 0;
         margin: 0;
         font-size: 14px;
+    }
+
+    .woocommerce-notices-wrapper {
+        position: fixed;
+        bottom: 1%;
+        left: 1%;
+        width: 98%;
+        max-width: 400px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
     }
 
     .woocommerce ul.products li.product .button {
