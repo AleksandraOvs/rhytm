@@ -64,6 +64,8 @@ section.widget {
 
 .sidebar-list li a.active {
     color: #fff;
+    background: rgba(255, 255, 255, .4);
+    border-color: rgba(255, 255, 255, .4);
 }
 
 .filter-item.instock-filter {
