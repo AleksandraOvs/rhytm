@@ -71,6 +71,7 @@ main.site-main {
     aspect-ratio: 3 / 4;
     border-radius: 20px;
     overflow: hidden;
+    max-width: 350px;
 }
 
 .woocommerce div.product div.images .flex-control-thumbs {
