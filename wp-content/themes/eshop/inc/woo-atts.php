@@ -154,7 +154,7 @@ add_action('wp_footer', function () {
 
         .czvet-variations {
             display: flex;
-            gap: 7px;
+            gap: 20px;
         }
 
         .czvet-item {
@@ -171,7 +171,8 @@ add_action('wp_footer', function () {
         .woocommerce div.product form.cart.variations_form {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
+            font-size: 10px;
         }
 
         .single_variation_wrap {
