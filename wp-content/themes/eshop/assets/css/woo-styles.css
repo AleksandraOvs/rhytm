@@ -322,12 +322,16 @@ h1.product-title {
 }
 
 
-.woocommerce ul.products li.product a.woocommerce-loop-product__link img {
+.woocommerce ul.products li.product a.woocommerce-loop-product__link {
     transition: transform .3s cubic-bezier(0, 0, 0.5, 1);
 }
 
-.woocommerce ul.products li.product a.woocommerce-loop-product__link:hover img {
+.woocommerce ul.products li.product a.woocommerce-loop-product__link:hover {
     transform: scale(1.0161);
+}
+
+.woocommerce div.product form.cart .variations {
+    margin-bottom: 0;
 }
 
 /*CATALOG PAGE*/
@@ -562,7 +566,16 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 @media (max-width: 768px) {
     .products.columns-3 {
         gap: 10px;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .products.columns-3 li.product {
+        width: calc(50% - 5px) !important;
+    }
+
+    .single_variation_wrap {
+        flex-direction: column;
     }
 
     /* .product-inner {
