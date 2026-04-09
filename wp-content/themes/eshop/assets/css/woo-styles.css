@@ -456,6 +456,11 @@ h2.category-heading:after {
     font-weight: 300;
 }
 
+.woocommerce-variation-add-to-cart {
+    display: flex;
+    gap: 20px;
+}
+
 .wc-block-components-button.wp-element-button.wc-block-cart__submit-button {
     background-color: var(--theme-color-accent);
     border-width: 0;

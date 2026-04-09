@@ -21,10 +21,5 @@ if (post_password_required()) {
         <div class="product-inner__content">
             <?php do_action('woocommerce_single_product_summary'); ?>
         </div>
-
-
-
-
-
     </div>
 </div>
