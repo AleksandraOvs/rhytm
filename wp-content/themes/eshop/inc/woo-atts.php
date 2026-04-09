@@ -179,6 +179,21 @@ add_action('wp_footer', function () {
             align-items: center;
             gap: 40px;
         }
+
+        .czvet-item img {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #737373;
+            border-radius: 10px;
+            outline: 1px solid #737373;
+            outline-offset: 2px;
+            transition: all .5s linear;
+        }
+
+        .czvet-item.active img {
+            outline-color: var(--theme-color-accent);
+            border-color: #fff;
+        }
     </style>
 <?php
 });
