@@ -380,6 +380,7 @@ h2.category-heading:after {
 }
 
 .categories-grid {
+    margin-top: 20px;
     display: flex;
     gap: 10px;
 }
