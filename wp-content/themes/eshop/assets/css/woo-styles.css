@@ -182,9 +182,9 @@ del .woocommerce-Price-amount.amount bdi {
     right: -30px;
     width: max-content;
 } */
-.woocommerce-page__content .container .product {
+/* .woocommerce-page__content .container .product {
     margin-top: 40px;
-}
+} */
 
 .woocommerce ul.products li.product .price {
     display: block;
