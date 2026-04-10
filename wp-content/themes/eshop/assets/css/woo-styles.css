@@ -71,7 +71,7 @@ main.site-main {
     aspect-ratio: 3 / 4;
     border-radius: 20px;
     overflow: hidden;
-    max-width: 350px;
+    max-width: 100%;
 }
 
 .woocommerce div.product div.images .flex-control-thumbs {
@@ -186,6 +186,11 @@ del .woocommerce-Price-amount.amount bdi {
     margin-top: 40px;
 } */
 
+.site-main .woocommerce-page__content>.product {
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+
 .woocommerce ul.products li.product .price {
     display: block;
     font-weight: 400;
@@ -212,7 +217,7 @@ del .woocommerce-Price-amount.amount bdi {
 
 .product-inner {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 40% 60%;
     gap: 40px;
 }
 
@@ -235,30 +240,35 @@ del .woocommerce-Price-amount.amount bdi {
 }
 
 .product-tabs__nav button {
-    background: #414141;
+    background: #ececec;
     border-radius: 0 0 10px 10px;
     border: none;
+    font-size: 18px;
+    font-family: inherit;
     color: #fff;
-    border-bottom: 1px solid #101010;
+    border-bottom: 1px solid var(--theme-color-secondary);
     border-top: none;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 5px 5px 0 0;
+    opacity: .6;
+    transition: all .5s linear;
 }
 
 .product-tabs__content {
     color: var(--theme-color-black);
-    border-bottom: 1px solid #101010;
+    border-bottom: 1px solid #c2c2c2;
     border-top: none;
     padding: 20px 10px;
     border-radius: 0 5px 5px 5px;
-    background: rgba(255, 255, 255, .75);
-    border-top: 1px solid transparent;
+    background: var(--theme-color-secondary);
+    border-top: 2px solid var(--theme-color-accent);
 }
 
 .product-tabs__btn.active {
-    background: rgba(255, 255, 255, .75);
+    background: var(--theme-color-accent);
     border-bottom: 1px solid transparent;
     color: var(--theme-color-black);
+    opacity: 1;
 }
 
 h1.product-title {
@@ -437,6 +447,14 @@ h2.category-heading:after {
     width: 100%;
 }
 
+.single_variation_wrap {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
 /*QTY*/
 
 .product-inner__content form.cart {
@@ -475,7 +493,7 @@ h2.category-heading:after {
     padding: 10px;
     transition: all .3s cubic-bezier(0, 0, 0.5, 1);
     display: block;
-    border: 1px solid #fff;
+    border: 1px solid var(--theme-color-black);
 }
 
 
@@ -510,10 +528,14 @@ h2.category-heading:after {
     border-bottom-width: medium;
     border-bottom-style: none;
     border-bottom-color: currentcolor;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--theme-color-black);
     color: #fff;
     font-size: 18px;
     font-weight: 300;
+}
+
+.quantity.pro-qty button svg path {
+    fill: var(--theme-color-black);
 }
 
 .woocommerce-variation-add-to-cart {
@@ -528,7 +550,7 @@ button.single_add_to_cart_button.button.alt.disabled {
 
 button.single_add_to_cart_button.button.alt.disabled:hover {
     background: rgba(0, 0, 0, .5);
-    border-color: #000;
+    border-color: transparent;
 }
 
 .wc-block-components-button.wp-element-button.wc-block-cart__submit-button {
@@ -555,6 +577,38 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     transform: scale(1.0161);
     background: #000;
     color: #fff;
+}
+
+.wp-singular.product-template-default.woocommerce.woocommerce-page {
+    background: #f5f5f5;
+}
+
+.wp-singular.product-template-default.woocommerce.woocommerce-page .page-header-wrapper * {
+    color: #000;
+    padding-top: 0;
+}
+
+.wp-singular.product-template-default.woocommerce.woocommerce-page .page-header-wrapper .container {
+    padding-bottom: 0;
+}
+
+.site-main .woocommerce-page__content>.product {
+    background: #f5f5f5;
+    gap: 0;
+}
+
+.site-main .woocommerce-page__content>.product * {
+    color: #000;
+}
+
+.site-main .woocommerce-page__content>.product h1 {
+    color: #000;
+}
+
+.site-main .woocommerce-page__content>.product .price span,
+.site-main .woocommerce-page__content>.product .price,
+.site-main .woocommerce-page__content>.product .price bdi {
+    color: #000;
 }
 
 /*PRODUCT ATTRIBUTES*/

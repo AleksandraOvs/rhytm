@@ -133,6 +133,22 @@ a.button:hover {
     margin: 0 auto;
 }
 
+.full-container {
+    width: 100%;
+}
+
+.light-bg {
+    background: var(--theme-color-secondary);
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.full-container.light-bg {
+    background: var(--theme-color-secondary);
+    padding: 20px 0;
+    border-radius: 20px;
+}
+
 a {
     color: #fff;
     text-decoration: none;
@@ -189,6 +205,12 @@ p.wp-block-paragraph {
 
 .mt-3em {
     margin-top: -2.5em;
+    z-index: 3;
+    position: relative;
+}
+
+.mt-1em {
+    margin-top: -1em;
     z-index: 3;
     position: relative;
 }
@@ -292,6 +314,11 @@ figure.wp-block-image.size-full img {
 
 .accent-color {
     color: var(--theme-color-accent);
+}
+
+footer {
+    background: #242424;
+    padding-top: 40px;
 }
 
 footer.footer .container {

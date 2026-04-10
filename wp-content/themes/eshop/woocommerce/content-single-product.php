@@ -10,37 +10,45 @@ if (post_password_required()) {
     return;
 }
 ?>
+
+
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class('', $product); ?>>
     <!-- <h1 class="product-title"><?php //the_title(); 
                                     ?></h1> -->
 
-    <div class="product-inner">
-        <div class="product-inner__images">
-            <?php do_action('woocommerce_before_single_product_summary'); ?>
-        </div>
+    <div class="container">
+        <div class="product-inner">
+            <div class="product-inner__images">
+                <?php do_action('woocommerce_before_single_product_summary'); ?>
+            </div>
 
-        <div class="product-inner__content">
-            <?php do_action('woocommerce_single_product_summary'); ?>
+            <div class="product-inner__content">
+                <?php do_action('woocommerce_single_product_summary'); ?>
+            </div>
         </div>
     </div>
 
-    <div class="product-tabs">
-        <div class="product-tabs__nav">
-            <button class="product-tabs__btn active" data-tab="desc">Описание</button>
-            <button class="product-tabs__btn" data-tab="chars">Характеристики</button>
-        </div>
 
-        <div class="product-tabs__content">
-            <div class="product-tabs__pane active" data-tab="desc">
-                <?php the_content(); ?>
+    <div class="container">
+        <div class="product-tabs">
+            <div class="product-tabs__nav">
+                <button class="product-tabs__btn active" data-tab="desc">Описание</button>
+                <button class="product-tabs__btn" data-tab="chars">Характеристики</button>
             </div>
 
-            <div class="product-tabs__pane" data-tab="chars">
-                <?php wc_display_product_attributes($product); ?>
+            <div class="product-tabs__content">
+                <div class="product-tabs__pane active" data-tab="desc">
+                    <?php the_content(); ?>
+                </div>
+
+                <div class="product-tabs__pane" data-tab="chars">
+                    <?php wc_display_product_attributes($product); ?>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
