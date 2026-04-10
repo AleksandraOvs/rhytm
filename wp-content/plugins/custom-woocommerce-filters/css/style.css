@@ -419,7 +419,7 @@ Start Sidebar Area Wrapper
     width: calc(100% / 6 - 20px);
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 0;
     flex-direction: column;
