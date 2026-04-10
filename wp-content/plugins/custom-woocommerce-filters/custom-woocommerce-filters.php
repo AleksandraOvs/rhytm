@@ -107,6 +107,11 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
                     ]);
 
                     $count = $count_query->found_posts;
+
+                    // ❗ если в текущей категории нет товаров с этим атрибутом — пропускаем
+                    if ($count === 0) {
+                        continue;
+                    }
                 ?>
 
                     <li>

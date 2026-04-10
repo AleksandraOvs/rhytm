@@ -113,6 +113,12 @@ main.site-main {
     gap: 20px;
 }
 
+.products-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
 .woocommerce ul.products li.product,
 .woocommerce-page ul.products li.product {
     float: none;
@@ -577,14 +583,16 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 }
 
 @media (max-width: 768px) {
-    .products.columns-3 {
+    .products-3 {
         gap: 10px;
         display: flex;
         flex-wrap: wrap;
     }
 
-    .products.columns-3 li.product {
-        width: calc(50% - 5px) !important;
+    .products-3 {
+        display: grid;
+        gap: 1.4em;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .single_variation_wrap {

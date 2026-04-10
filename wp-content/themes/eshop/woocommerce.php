@@ -63,7 +63,17 @@ do_action('woocommerce_before_main_content');
             $products = new WP_Query($args);
 
             if ($products->have_posts()) : ?>
-                <ul class="products">
+                <?php
+                // Получаем количество колонок (2,3,4,5 и т.д.)
+                $columns = wc_get_loop_prop('columns');
+
+                // Фолбек (если вдруг не задано)
+                if (!$columns) {
+                    $columns = 4;
+                }
+                ?>
+
+                <ul class="products products-<?php echo esc_attr($columns); ?>">
                     <?php while ($products->have_posts()) : $products->the_post(); ?>
                         <?php wc_get_template_part('content', 'product'); ?>
                     <?php endwhile; ?>
@@ -115,7 +125,17 @@ do_action('woocommerce_before_main_content');
             $products = new WP_Query($args);
 
             if ($products->have_posts()) : ?>
-                <ul class="products">
+                <?php
+                // Получаем количество колонок (2,3,4,5 и т.д.)
+                $columns = wc_get_loop_prop('columns');
+
+                // Фолбек (если вдруг не задано)
+                if (!$columns) {
+                    $columns = 4;
+                }
+                ?>
+
+                <ul class="products products-<?php echo esc_attr($columns); ?>">
                     <?php while ($products->have_posts()) : $products->the_post(); ?>
                         <?php wc_get_template_part('content', 'product'); ?>
                     <?php endwhile; ?>
