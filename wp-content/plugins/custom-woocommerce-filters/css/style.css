@@ -534,6 +534,14 @@ Start Sidebar Area Wrapper
         list-style: none;
         scroll-behavior: smooth;
     }
+
+    .single-sidebar-wrap {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        border: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -543,5 +551,12 @@ Start Sidebar Area Wrapper
 
     .sidebar-area-wrapper._filters {
         margin-top: 0;
+    }
+
+    .single-sidebar-wrap {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
     }
 }
