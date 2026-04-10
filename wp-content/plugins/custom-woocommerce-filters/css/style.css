@@ -51,7 +51,7 @@ section.widget {
     display: inline-block;
     cursor: pointer;
     padding: 5px 10px;
-    background: var(--theme-color-black);
+    background: transparent;
     border-radius: 5px;
     font-size: 14px;
     width: max-content;
@@ -59,6 +59,7 @@ section.widget {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #303030;
 }
 
 .sidebar-list li a.active {
@@ -473,7 +474,6 @@ Start Sidebar Area Wrapper
 
 .single-sidebar-wrap {
     width: calc(100% / 6 - 6px);
-    border-right: 1px dotted #a1a1a1;
 }
 
 #cwc-reset-filters {

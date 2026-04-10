@@ -47,6 +47,8 @@ if (post_password_required()) {
             </div>
         </div>
     </div>
+
+    <?php get_template_part('template-parts/related-products') ?>
 </div>
 
 

@@ -82,3 +82,71 @@ add_filter('woocommerce_add_to_cart_fragments', function ($fragments) {
 
 //убрать название товара на странице
 //remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+
+//выводим первые три характеристики после заголовка товара в карточке
+add_action('woocommerce_single_product_summary', 'my_product_short_attributes', 6);
+
+function my_product_short_attributes()
+{
+    global $product;
+
+    if (!$product) return;
+
+    echo '<div class="product-short-attributes" id="js-product-attributes">';
+
+    $count = 0;
+
+    // ===== VARIABLE PRODUCT → дефолтная вариация =====
+    if ($product->is_type('variable')) {
+
+        $default_attrs = $product->get_default_attributes();
+
+        foreach ($default_attrs as $taxonomy => $term_slug) {
+
+            if ($count >= 3) break;
+
+            $label = wc_attribute_label($taxonomy);
+
+            $term = get_term_by('slug', $term_slug, $taxonomy);
+            $value = $term ? $term->name : $term_slug;
+
+            echo '<div class="attr">';
+            echo '<span class="attr-label">' . esc_html($label) . ':</span> ';
+            echo '<span class="attr-value">' . esc_html($value) . '</span>';
+            echo '</div>';
+
+            $count++;
+        }
+    } else {
+        // ===== SIMPLE PRODUCT =====
+
+        $attributes = $product->get_attributes();
+
+        foreach ($attributes as $attribute) {
+
+            if ($count >= 3) break;
+
+            if (!$attribute->get_visible()) continue;
+
+            $label = wc_attribute_label($attribute->get_name());
+
+            if ($attribute->is_taxonomy()) {
+                $terms = wp_get_post_terms($product->get_id(), $attribute->get_name(), ['fields' => 'names']);
+                $value = implode(', ', $terms);
+            } else {
+                $value = implode(', ', $attribute->get_options());
+            }
+
+            if (!empty($value)) {
+                echo '<div class="attr">';
+                echo '<span class="attr-label">' . esc_html($label) . ':</span> ';
+                echo '<span class="attr-value">' . esc_html($value) . '</span>';
+                echo '</div>';
+
+                $count++;
+            }
+        }
+    }
+
+    echo '</div>';
+}

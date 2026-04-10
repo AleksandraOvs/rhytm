@@ -154,13 +154,14 @@ add_action('wp_footer', function () {
 
         .czvet-variations {
             display: flex;
-            gap: 20px;
+            gap: 0;
         }
 
         .czvet-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 5px;
         }
 
         .variations_form.cart table.variations tbody tr label {
@@ -184,16 +185,15 @@ add_action('wp_footer', function () {
         .czvet-item img {
             width: 50px;
             height: 50px;
-            border: 1px solid #737373;
-            border-radius: 10px;
-            outline: 1px solid #737373;
-            outline-offset: 2px;
+            display: block;
+            overflow: hidden;
+            border-radius: 100%;
+            border: 2px solid rgba(0, 0, 0, .1);
             transition: all .5s linear;
         }
 
         .czvet-item.active img {
-            outline-color: var(--theme-color-accent);
-            border-color: #fff;
+            border: 2px solid var(--theme-color-accent);
         }
     </style>
 <?php

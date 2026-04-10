@@ -70,3 +70,69 @@ document.body.addEventListener('added_to_cart', function (e) {
     button.classList.add('in-cart');
     button.disabled = true;
 });
+
+new Swiper('.related-products-slider', {
+    slidesPerView: 4,
+    spaceBetween: 20,
+
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+
+    breakpoints: {
+        320: {
+            slidesPerView: 1.3,
+        },
+        768: {
+            slidesPerView: 2.3,
+        },
+        992: {
+            slidesPerView: 4,
+        }
+    }
+});
+
+//обновление характеристик для вариативного товара
+document.addEventListener('DOMContentLoaded', function () {
+
+    const container = document.getElementById('js-product-attributes');
+    const form = document.querySelector('.variations_form');
+
+    if (!container || !form) return;
+
+    form.addEventListener('found_variation', function (event, variation) {
+
+        let html = '';
+        let count = 0;
+
+        for (let key in variation.attributes) {
+
+            if (count >= 3) break;
+
+            let value = variation.attributes[key];
+            if (!value) continue;
+
+            let label = key
+                .replace('attribute_', '')
+                .replace('pa_', '');
+
+            html += `
+                <div class="attr">
+                    <span class="attr-label">${label}:</span>
+                    <span class="attr-value">${value}</span>
+                </div>
+            `;
+
+            count++;
+        }
+
+        container.innerHTML = html;
+    });
+
+});

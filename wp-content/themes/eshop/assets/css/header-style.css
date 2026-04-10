@@ -48,6 +48,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .site-header-top__right {
