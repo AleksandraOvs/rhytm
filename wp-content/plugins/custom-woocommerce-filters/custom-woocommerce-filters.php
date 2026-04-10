@@ -18,6 +18,14 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('cwc-style', plugin_dir_url(__FILE__) . 'css/style.css');
 
     wp_enqueue_script(
+        'cwc-filters-js',
+        plugin_dir_url(__FILE__) . 'js/scripts.js',
+        null,
+        '2.0',
+        true
+    );
+
+    wp_enqueue_script(
         'cwc-ajax-filters',
         plugin_dir_url(__FILE__) . 'js/admin-ajax.js',
         ['jquery', 'jquery-ui-slider'],

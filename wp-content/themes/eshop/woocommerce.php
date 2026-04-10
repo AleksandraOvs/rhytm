@@ -29,7 +29,7 @@ do_action('woocommerce_before_main_content');
         <?php
         if (is_shop()) {
 
-            echo do_shortcode('[shop_filters]');
+
 
             // Получаем родительские категории (только верхний уровень)
             $categories = get_terms([
@@ -52,7 +52,7 @@ do_action('woocommerce_before_main_content');
                 }
                 echo '</div>';
             }
-
+            echo do_shortcode('[shop_filters]');
             // Показываем все товары
             $args = [
                 'post_type'      => 'product',
