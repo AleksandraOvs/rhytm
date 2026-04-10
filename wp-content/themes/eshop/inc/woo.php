@@ -50,35 +50,35 @@ add_filter('woocommerce_add_to_cart_fragments', function ($fragments) {
 });
 
 /* ---------- Убираем табы ---------- */
-add_filter('woocommerce_product_tabs', '__return_empty_array', 98);
+//add_filter('woocommerce_product_tabs', '__return_empty_array', 98);
 
 /* ---------- Добавляем описание и характеристики под .product_meta ---------- */
-add_action('woocommerce_single_product_summary', 'add_content_after_product_meta', 45);
+// add_action('woocommerce_single_product_summary', 'add_content_after_product_meta', 45);
 
-function add_content_after_product_meta()
-{
-    global $product;
+// function add_content_after_product_meta()
+// {
+//     global $product;
 
-    echo '<div class="product-meta-extra">';
+//     echo '<div class="product-meta-extra">';
 
-    // 📄 Описание
-    if ($product->get_description()) {
-        echo '<div class="product-description">';
-        echo '<h3>Описание</h3>';
-        echo wpautop($product->get_description());
-        echo '</div>';
-    }
+//     // 📄 Описание
+//     if ($product->get_description()) {
+//         echo '<div class="product-description">';
+//         echo '<h3>Описание</h3>';
+//         echo wpautop($product->get_description());
+//         echo '</div>';
+//     }
 
-    // ⚙️ Характеристики
-    if ($product->has_attributes()) {
-        echo '<div class="product-attributes">';
-        echo '<h3>Характеристики</h3>';
-        wc_display_product_attributes($product);
-        echo '</div>';
-    }
+//     // ⚙️ Характеристики
+//     if ($product->has_attributes()) {
+//         echo '<div class="product-attributes">';
+//         echo '<h3>Характеристики</h3>';
+//         wc_display_product_attributes($product);
+//         echo '</div>';
+//     }
 
-    echo '</div>';
-}
+//     echo '</div>';
+// }
 
 //убрать название товара на странице
-remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+//remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);

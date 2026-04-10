@@ -216,8 +216,49 @@ del .woocommerce-Price-amount.amount bdi {
     gap: 40px;
 }
 
+.product-tabs {
+    width: 100%;
+}
+
+.product-tabs__pane {
+    display: none;
+}
+
+.product-tabs__pane.active {
+    display: block;
+}
+
+.product-tabs__btn.active {}
+
 .product-inner__images {
     position: relative;
+}
+
+.product-tabs__nav button {
+    background: #414141;
+    border-radius: 0 0 10px 10px;
+    border: none;
+    color: #fff;
+    border-bottom: 1px solid #101010;
+    border-top: none;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.product-tabs__content {
+    color: var(--theme-color-black);
+    border-bottom: 1px solid #101010;
+    border-top: none;
+    padding: 20px 10px;
+    border-radius: 0 5px 5px 5px;
+    background: rgba(255, 255, 255, .75);
+    border-top: 1px solid transparent;
+}
+
+.product-tabs__btn.active {
+    background: rgba(255, 255, 255, .75);
+    border-bottom: 1px solid transparent;
+    color: var(--theme-color-black);
 }
 
 h1.product-title {
@@ -415,6 +456,13 @@ h2.category-heading:after {
 .woocommerce div.product form.cart::before {
     content: none;
     display: unset;
+}
+
+.single_variation_wrap {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-direction: row-reverse;
 }
 
 .quantity.pro-qty button,
