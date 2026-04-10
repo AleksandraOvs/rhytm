@@ -512,6 +512,12 @@ Start Sidebar Area Wrapper
         flex-direction: row;
     }
 
+    .cwc-filter-actions {
+        width: calc(100% / 3 - 12px);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-start;
+    }
 }
 
 @media (max-width: 768px) {
