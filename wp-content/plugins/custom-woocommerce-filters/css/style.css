@@ -52,7 +52,7 @@ section.widget {
     display: inline-block;
     cursor: pointer;
     padding: 3px 5px;
-    border: 1px solid var(--theme-color-secondary);
+    background: var(--theme-color-black);
     border-radius: 5px;
     font-size: 14px;
     width: max-content;
