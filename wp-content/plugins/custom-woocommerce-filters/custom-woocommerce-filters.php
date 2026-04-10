@@ -70,7 +70,39 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
     if (empty($terms) || is_wp_error($terms)) return '';
 
     // list($min_price, $max_price) = cwc_get_store_price_range();
+    $has_terms = false;
 
+    foreach ($terms as $term) {
+
+        $tax_query = [
+            [
+                'taxonomy' => $taxonomy,
+                'field'    => 'slug',
+                'terms'    => $term->slug,
+            ]
+        ];
+
+        if ($current_cat_id) {
+            $tax_query[] = [
+                'taxonomy' => 'product_cat',
+                'field'    => 'term_id',
+                'terms'    => $current_cat_id,
+            ];
+        }
+
+        $check_query = new WP_Query([
+            'post_type' => 'product',
+            'posts_per_page' => 1,
+            'tax_query' => $tax_query,
+        ]);
+
+        if ($check_query->found_posts > 0) {
+            $has_terms = true;
+            break;
+        }
+    }
+
+    if (!$has_terms) return '';
     ob_start();
 ?>
 
