@@ -140,10 +140,10 @@ del .woocommerce-Price-amount.amount bdi {
     padding: 5px;
 }
 
-.product-inner__content .price {
+/* .product-inner__content .price {
     flex-direction: row-reverse;
     display: flex !important;
-}
+} */
 
 .product-inner__content {
     display: flex;
@@ -195,9 +195,10 @@ del .woocommerce-Price-amount.amount bdi {
     display: block;
     font-weight: 400;
     margin-bottom: .5em;
-    font-size: .857em;
+    font-size: 16px;
     position: relative;
     width: max-content;
+    color: #fff;
 }
 
 .woocommerce ul.products li.product .price ins {

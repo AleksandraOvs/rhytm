@@ -150,3 +150,22 @@ function my_product_short_attributes()
 
     echo '</div>';
 }
+
+//формат цены для вариативных товаров от...
+add_filter('woocommerce_get_price_html', 'custom_variable_price_from', 10, 2);
+
+function custom_variable_price_from($price, $product)
+{
+
+    if ($product->is_type('variable')) {
+
+        // Минимальная цена вариации
+        $min_price = $product->get_variation_price('min', true);
+
+        if ($min_price) {
+            $price = 'От ' . wc_price($min_price);
+        }
+    }
+
+    return $price;
+}
