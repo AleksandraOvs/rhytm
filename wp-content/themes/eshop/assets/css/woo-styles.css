@@ -734,7 +734,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     .products-3 {
         display: grid;
         gap: 1.4em;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, calc(50% - .7em));
     }
 
     .single_variation_wrap {
