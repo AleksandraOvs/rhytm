@@ -615,7 +615,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 }
 
 .wp-singular.product-template-default.woocommerce.woocommerce-page {
-    background: #f5f5f5;
+    background: var(--theme-color-secondary);
 }
 
 .wp-singular.product-template-default.woocommerce.woocommerce-page .page-header-wrapper * {
@@ -628,7 +628,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 }
 
 .site-main .woocommerce-page__content>.product {
-    background: #f5f5f5;
+    background: var(--theme-color-secondary);
     gap: 0;
 }
 
