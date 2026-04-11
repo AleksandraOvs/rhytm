@@ -99,40 +99,40 @@ new Swiper('.related-products-slider', {
 });
 
 //обновление характеристик для вариативного товара
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
 
-    const container = document.getElementById('js-product-attributes');
-    const form = document.querySelector('.variations_form');
+//     const container = document.getElementById('js-product-attributes');
+//     const form = document.querySelector('.variations_form');
 
-    if (!container || !form) return;
+//     if (!container || !form) return;
 
-    form.addEventListener('found_variation', function (event, variation) {
+//     form.addEventListener('found_variation', function (event, variation) {
 
-        let html = '';
-        let count = 0;
+//         let html = '';
+//         let count = 0;
 
-        for (let key in variation.attributes) {
+//         for (let key in variation.attributes) {
 
-            if (count >= 3) break;
+//             if (count >= 3) break;
 
-            let value = variation.attributes[key];
-            if (!value) continue;
+//             let value = variation.attributes[key];
+//             if (!value) continue;
 
-            let label = key
-                .replace('attribute_', '')
-                .replace('pa_', '');
+//             let label = key
+//                 .replace('attribute_', '')
+//                 .replace('pa_', '');
 
-            html += `
-                <div class="attr">
-                    <span class="attr-label">${label}:</span>
-                    <span class="attr-value">${value}</span>
-                </div>
-            `;
+//             html += `
+//                 <div class="attr">
+//                     <span class="attr-label">${label}:</span>
+//                     <span class="attr-value">${value}</span>
+//                 </div>
+//             `;
 
-            count++;
-        }
+//             count++;
+//         }
 
-        container.innerHTML = html;
-    });
+//         container.innerHTML = html;
+//     });
 
-});
+// });

@@ -178,7 +178,7 @@ add_action('wp_footer', function () {
 
         .single_variation_wrap {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 40px;
         }
 
