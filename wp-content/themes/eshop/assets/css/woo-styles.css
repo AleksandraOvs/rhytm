@@ -864,5 +864,22 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
         padding: 10px;
     }
 
+    .product-tabs__nav {
+        display: flex;
+    }
+
+    .product-tabs__nav button {
+        font-size: 14px;
+        flex-grow: 1;
+    }
+
+    .product-tabs__pane {
+        font-size: 14px;
+        line-height: 140%;
+    }
+
+    .product-tabs__pane p:not(:first-child) {
+        margin-top: 12px;
+    }
 
 }
