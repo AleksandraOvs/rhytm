@@ -821,6 +821,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     .categories-grid {
         flex-direction: column;
         margin-top: 1em;
+        margin-bottom: 1em;
     }
 
     .category-item__link {
