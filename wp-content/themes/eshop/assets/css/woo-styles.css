@@ -266,6 +266,10 @@ del .woocommerce-Price-amount.amount bdi {
     border-top: 2px solid var(--theme-color-accent);
 }
 
+.product-tabs__pane p:not(:first-child) {
+    margin-top: 12px;
+}
+
 .product-tabs__btn.active {
     background: var(--theme-color-accent);
     border-bottom: 1px solid transparent;
@@ -876,10 +880,6 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     .product-tabs__pane {
         font-size: 14px;
         line-height: 140%;
-    }
-
-    .product-tabs__pane p:not(:first-child) {
-        margin-top: 12px;
     }
 
 }
