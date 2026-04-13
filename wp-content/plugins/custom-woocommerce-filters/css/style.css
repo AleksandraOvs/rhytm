@@ -467,7 +467,7 @@ Start Sidebar Area Wrapper
     flex-wrap: wrap;
     gap: 10px;
     padding: 20px;
-    background: rgba(255, 255, 255, .6);
+    background: rgba(255, 255, 255, .3);
     border-radius: 20px;
     border-bottom: 1px solid #fff;
     border-top: 1px solid #fff;
