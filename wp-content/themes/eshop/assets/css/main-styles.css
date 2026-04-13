@@ -482,8 +482,12 @@ body.archive #primary #main .woocommerce-page__content .page-header-wrapper .con
     color: var(--theme-color-black);
 }
 
-body.archive #primary #main .woocommerce-page__content .container .products li a h2,
-body.archive #primary #main .woocommerce-page__content .container .products li a h2 span bdi {
+body.archive #primary #main .woocommerce-page__content .container .products li a * {
+    color: var(--theme-color-black);
+}
+
+body.archive #primary #main .woocommerce-page__content .container .products li a span.price,
+body.archive #primary #main .woocommerce-page__content .container .products li a span.price bdi {
     color: var(--theme-color-black);
 }
 
