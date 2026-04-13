@@ -469,6 +469,24 @@ footer.footer .container .footer-bottom {
     object-position: center;
 }
 
+body.archive.custom-background {
+    background: var(--theme-color-secondary);
+}
+
+body.archive #primary #main .woocommerce-page__content .page-header-wrapper .container h1 {
+    color: var(--theme-color-black);
+}
+
+body.archive #primary #main .woocommerce-page__content .page-header-wrapper .container .breadcrumbs__list,
+body.archive #primary #main .woocommerce-page__content .page-header-wrapper .container .breadcrumbs__list a {
+    color: var(--theme-color-black);
+}
+
+body.archive #primary #main .woocommerce-page__content .container .products li a h2,
+body.archive #primary #main .woocommerce-page__content .container .products li a h2 span bdi {
+    color: var(--theme-color-black);
+}
+
 @media (max-width: 1200px) {
     .container {
         width: 100%;
