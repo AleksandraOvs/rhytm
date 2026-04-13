@@ -64,9 +64,9 @@ section.widget {
 }
 
 .sidebar-list li a.active {
-    color: #fff;
-    background: rgba(255, 255, 255, .4);
-    border-color: rgba(255, 255, 255, .4);
+    color: var(--theme-color-black);
+    background: var(--theme-color-accent);
+    border-color: var(--theme-color-accent);
 }
 
 .sidebar-list li a:hover {
