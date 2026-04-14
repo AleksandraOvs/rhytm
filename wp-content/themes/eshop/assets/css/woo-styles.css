@@ -398,9 +398,9 @@ h1.product-title {
     transform: scale(1.0161);
 }
 
-.woocommerce div.product form.cart .variations {
+/* .woocommerce div.product form.cart .variations {
     margin-bottom: 0;
-}
+} */
 
 /*CATALOG PAGE*/
 h2.category-heading {
