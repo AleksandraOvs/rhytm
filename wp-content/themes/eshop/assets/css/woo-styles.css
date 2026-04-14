@@ -602,8 +602,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 
 .woocommerce div.product form.cart {
     margin-bottom: 2em;
-    display: flex;
-    flex-direction: column;
+    display: block;
     margin-top: 30px;
 }
 
