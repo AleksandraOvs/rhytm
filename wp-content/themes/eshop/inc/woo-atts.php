@@ -279,6 +279,24 @@ add_action('wp_footer', function () {
         .wc-attr-item.generic-item.active {
             border-color: var(--theme-color-accent);
         }
+
+        .woocommerce div.product form.cart .reset_variations {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+
+            .variations tbody {
+                gap: 20px;
+                flex-direction: column;
+            }
+
+            .variations tbody tr {
+                flex-direction: row;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
     </style>
 <?php
 });
