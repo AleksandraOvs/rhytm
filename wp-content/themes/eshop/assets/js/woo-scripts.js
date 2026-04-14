@@ -98,6 +98,30 @@ new Swiper('.related-products-slider', {
     }
 });
 
+new Swiper('.cross-sells-products-slider', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+
+    breakpoints: {
+        480: {
+            slidesPerView: 2,
+        },
+        1024: {
+            slidesPerView: 3,
+        }
+    }
+});
+
 //обновление характеристик для вариативного товара
 // document.addEventListener('DOMContentLoaded', function () {
 
