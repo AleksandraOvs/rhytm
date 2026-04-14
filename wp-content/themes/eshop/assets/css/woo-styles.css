@@ -870,6 +870,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 
     .product-tabs__nav {
         display: flex;
+        flex-direction: column;
     }
 
     .product-tabs__nav button {
