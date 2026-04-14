@@ -824,9 +824,9 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
         gap: 20px;
     }
 
-    .woocommerce div.product div.images .woocommerce-product-gallery__image a {
+    /* .woocommerce div.product div.images .woocommerce-product-gallery__image a {
         max-width: 270px;
-    }
+    } */
 
     .product-tabs {
         width: 100%;
