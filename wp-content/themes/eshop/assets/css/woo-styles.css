@@ -900,4 +900,9 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
         line-height: 140%;
     }
 
+    .site-main .woocommerce-page__content>.product {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
 }
