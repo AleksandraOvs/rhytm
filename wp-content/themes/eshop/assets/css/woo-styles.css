@@ -1033,4 +1033,21 @@ a.cross-product__slide__image img {
         align-items: center;
     }
 
+    .swiper.cross-sells-products-slider .swiper-wrapper .swiper-slide {
+        flex-direction: column;
+    }
+
+    .swiper-slide.cross-product__slide .cross-product__slide__content {
+        width: 100%;
+    }
+
+    .swiper-slide.cross-product__slide .cross-product__slide__image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .cross-product__slide__content a {
+        text-align: center;
+    }
+
 }
