@@ -489,6 +489,7 @@ body.archive #primary #main .woocommerce-page__content .container .products li a
 body.archive #primary #main .woocommerce-page__content .container .products li a span.price,
 body.archive #primary #main .woocommerce-page__content .container .products li a span.price bdi {
     color: var(--theme-color-black);
+    font-weight: 500;
 }
 
 @media (max-width: 1200px) {
