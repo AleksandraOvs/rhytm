@@ -281,7 +281,7 @@ add_action('wp_footer', function () {
         }
 
         .woocommerce div.product form.cart .reset_variations {
-            display: none;
+            display: none !important;
         }
 
         @media (max-width: 480px) {
