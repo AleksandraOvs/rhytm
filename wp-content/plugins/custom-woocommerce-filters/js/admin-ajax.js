@@ -45,7 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
+
+                    // 🔥 товары
                     productsWrapper.innerHTML = res.data.html;
+
+                    // 🔥 фильтры (ОЧЕНЬ ВАЖНО)
+                    const filtersWrapper = document.querySelector('.sidebar-area-wrapper._filters');
+                    if (filtersWrapper && res.data.filters) {
+                        filtersWrapper.innerHTML = res.data.filters;
+                    }
+
                 } else {
                     console.warn('Ошибка фильтрации', res);
                 }

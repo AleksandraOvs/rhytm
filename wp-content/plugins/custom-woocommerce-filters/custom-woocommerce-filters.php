@@ -2,11 +2,12 @@
 /*
 Plugin Name: Custom WooCommerce Filters
 Description: AJAX фильтр товаров WooCommerce через шорткод [shop_filters]
-Version: 2.0
+Version: 3.0
 Author: PurpleWeb
 */
 
 if (!defined('ABSPATH')) exit;
+
 /* ---------------------------------------------------
  * Подключение JS и CSS
  * --------------------------------------------------- */
@@ -18,18 +19,10 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('cwc-style', plugin_dir_url(__FILE__) . 'css/style.css');
 
     wp_enqueue_script(
-        'cwc-filters-js',
-        plugin_dir_url(__FILE__) . 'js/scripts.js',
-        null,
-        '2.0',
-        true
-    );
-
-    wp_enqueue_script(
         'cwc-ajax-filters',
         plugin_dir_url(__FILE__) . 'js/admin-ajax.js',
         ['jquery', 'jquery-ui-slider'],
-        '2.0',
+        '3.0',
         true
     );
 
@@ -37,38 +30,27 @@ add_action('wp_enqueue_scripts', function () {
         'ajax_url' => admin_url('admin-ajax.php')
     ]);
 });
+
 /* ---------------------------------------------------
- * META QUERY ДЛЯ ЦЕНЫ (универсальный)
+ * Получить активные фильтры
  * --------------------------------------------------- */
-function cwc_price_meta_query($min, $max)
+function cwc_get_active_filters()
 {
-    return [
-        'relation' => 'OR',
-        [
-            'key'     => '_price',
-            'value'   => [$min, $max],
-            'compare' => 'BETWEEN',
-            'type'    => 'NUMERIC',
-        ],
-        [
-            'key'     => '_min_variation_price',
-            'value'   => $max,
-            'compare' => '<=',
-            'type'    => 'NUMERIC',
-        ],
-        [
-            'key'     => '_max_variation_price',
-            'value'   => $min,
-            'compare' => '>=',
-            'type'    => 'NUMERIC',
-        ],
-    ];
+    $filters = [];
+
+    foreach ($_POST as $key => $value) {
+        if (preg_match('/^filter_(pa_[a-z0-9\-]+)$/', $key, $m)) {
+            $filters[$m[1]] = (array) $value;
+        }
+    }
+
+    return $filters;
 }
 
 /* ---------------------------------------------------
- * Фильтр атрибутов
+ * Динамический фильтр (главный)
  * --------------------------------------------------- */
-function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
+function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id = 0, $active_filters = [])
 {
     $terms = get_terms([
         'taxonomy'   => $taxonomy,
@@ -77,40 +59,6 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
 
     if (empty($terms) || is_wp_error($terms)) return '';
 
-    // list($min_price, $max_price) = cwc_get_store_price_range();
-    $has_terms = false;
-
-    foreach ($terms as $term) {
-
-        $tax_query = [
-            [
-                'taxonomy' => $taxonomy,
-                'field'    => 'slug',
-                'terms'    => $term->slug,
-            ]
-        ];
-
-        if ($current_cat_id) {
-            $tax_query[] = [
-                'taxonomy' => 'product_cat',
-                'field'    => 'term_id',
-                'terms'    => $current_cat_id,
-            ];
-        }
-
-        $check_query = new WP_Query([
-            'post_type' => 'product',
-            'posts_per_page' => 1,
-            'tax_query' => $tax_query,
-        ]);
-
-        if ($check_query->found_posts > 0) {
-            $has_terms = true;
-            break;
-        }
-    }
-
-    if (!$has_terms) return '';
     ob_start();
 ?>
 
@@ -122,15 +70,9 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
 
                 <?php foreach ($terms as $term):
 
-                    $tax_query = [
-                        'relation' => 'AND',
-                        [
-                            'taxonomy' => $taxonomy,
-                            'field'    => 'slug',
-                            'terms'    => $term->slug,
-                        ]
-                    ];
+                    $tax_query = ['relation' => 'AND'];
 
+                    // категория
                     if ($current_cat_id) {
                         $tax_query[] = [
                             'taxonomy' => 'product_cat',
@@ -139,19 +81,30 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
                         ];
                     }
 
-                    $count_query = new WP_Query([
-                        'post_type'      => 'product',
+                    // активные фильтры
+                    foreach ($active_filters as $tax => $values) {
+                        $tax_query[] = [
+                            'taxonomy' => $tax,
+                            'field'    => 'slug',
+                            'terms'    => $values,
+                            'operator' => 'IN',
+                        ];
+                    }
+
+                    // текущий термин
+                    $tax_query[] = [
+                        'taxonomy' => $taxonomy,
+                        'field'    => 'slug',
+                        'terms'    => $term->slug,
+                    ];
+
+                    $query = new WP_Query([
+                        'post_type' => 'product',
                         'posts_per_page' => 1,
-                        'tax_query'      => $tax_query,
-                        // 'meta_query'     => [cwc_price_meta_query($min_price, $max_price)],
+                        'tax_query' => $tax_query,
                     ]);
 
-                    $count = $count_query->found_posts;
-
-                    // ❗ если в текущей категории нет товаров с этим атрибутом — пропускаем
-                    if ($count === 0) {
-                        continue;
-                    }
+                    if (!$query->found_posts) continue;
                 ?>
 
                     <li>
@@ -159,13 +112,12 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
                             class="filter-item"
                             data-slug="<?php echo esc_attr($term->slug); ?>"
                             data-taxonomy="<?php echo esc_attr($taxonomy); ?>">
-                            <!-- <span class="filter-checkbox"></span> -->
-                            <?php echo esc_html($term->name); ?> <?php //echo $count; 
-                                                                    ?>
+                            <?php echo esc_html($term->name); ?>
                         </a>
                     </li>
 
                 <?php endforeach; ?>
+
             </ul>
         </div>
     </div>
@@ -174,8 +126,37 @@ function cwc_render_attribute_filter($taxonomy, $title, $current_cat_id = 0)
     return ob_get_clean();
 }
 
-?>
-<?php
+/* ---------------------------------------------------
+ * Рендер всех фильтров
+ * --------------------------------------------------- */
+function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
+{
+    $taxonomies = [
+        'pa_czvet' => 'Цвет',
+        'pa_podkluchenie' => 'Подключение',
+        'pa_kolichestvo-sec' => 'Количество секций',
+        'pa_pl-obogreva' => 'Площадь обогрева',
+        'pa_teplootdacha' => 'Теплоотдача',
+    ];
+
+    $html = '';
+
+    foreach ($taxonomies as $taxonomy => $title) {
+
+        // убираем текущий фильтр
+        $filters_for_this = $active_filters;
+        unset($filters_for_this[$taxonomy]);
+
+        $html .= cwc_render_attribute_filter_dynamic(
+            $taxonomy,
+            $title,
+            $current_cat_id,
+            $filters_for_this
+        );
+    }
+
+    return $html;
+}
 
 /* ---------------------------------------------------
  * ШОРТКОД
@@ -189,27 +170,8 @@ function cwc_shop_filters_shortcode()
     <div class="sidebar-area-wrapper _filters"
         data-current-cat="<?php echo esc_attr($current_cat_id); ?>">
 
-        <?php //echo cwc_render_price_filter(); 
-        ?>
-
-        <!-- В наличии -->
-        <!-- <div class="single-sidebar-wrap">
-            <ul data-taxonomy="instock_filter">
-                <li>
-                    <a href="#" class="filter-item" data-slug="instock">
-                        <span class="filter-checkbox"></span>
-                        Есть в наличии
-                    </a>
-                </li>
-            </ul>
-        </div> -->
-
         <?php
-        echo cwc_render_attribute_filter('pa_czvet', 'Цвет', $current_cat_id);
-        echo cwc_render_attribute_filter('pa_podkluchenie', 'Подключение', $current_cat_id);
-        echo cwc_render_attribute_filter('pa_kolichestvo-sec', 'Количество секций', $current_cat_id);
-        echo cwc_render_attribute_filter('pa_pl-obogreva', 'Площадь обогрева', $current_cat_id);
-        echo cwc_render_attribute_filter('pa_teplootdacha', 'Теплоотдача', $current_cat_id);
+        echo cwc_render_filters_with_context($current_cat_id);
         ?>
 
         <div class="cwc-filter-actions">
@@ -232,56 +194,36 @@ add_action('wp_ajax_nopriv_cwc_filter_products', 'cwc_filter_products');
 
 function cwc_filter_products()
 {
-    // list($store_min, $store_max) = cwc_get_store_price_range();
+    $current_cat_id = !empty($_POST['current_cat_id']) ? (int) $_POST['current_cat_id'] : 0;
+    $active_filters = cwc_get_active_filters();
 
     $args = [
         'post_type'      => 'product',
         'post_status'    => 'publish',
         'posts_per_page' => 12,
         'tax_query'      => ['relation' => 'AND'],
-        'meta_query'     => ['relation' => 'AND'],
     ];
 
-    /* Категория */
-    if (!empty($_POST['current_cat_id'])) {
+    // категория
+    if ($current_cat_id) {
         $args['tax_query'][] = [
             'taxonomy' => 'product_cat',
             'field'    => 'term_id',
-            'terms'    => (int) $_POST['current_cat_id'],
+            'terms'    => $current_cat_id,
         ];
     }
 
-    /* В наличии */
-    // if (!empty($_POST['instock'])) {
-    //     $args['meta_query'][] = [
-    //         'key'   => '_stock_status',
-    //         'value' => 'instock',
-    //     ];
-    // }
-
-    /* Атрибуты */
-    foreach ($_POST as $key => $value) {
-
-        if (preg_match('/^filter_(pa_[a-z0-9\-]+)$/', $key, $m)) {
-
-            $terms = is_array($value) ? $value : [$value];
-
-            $args['tax_query'][] = [
-                'taxonomy' => $m[1],
-                'field'    => 'slug',
-                'terms'    => array_map('wc_clean', $terms),
-                'operator' => 'IN',
-            ];
-        }
+    // атрибуты
+    foreach ($active_filters as $taxonomy => $terms) {
+        $args['tax_query'][] = [
+            'taxonomy' => $taxonomy,
+            'field'    => 'slug',
+            'terms'    => array_map('wc_clean', $terms),
+            'operator' => 'IN',
+        ];
     }
 
-    /* Цена */
-    // $min_price = isset($_POST['min_price']) ? (int) $_POST['min_price'] : $store_min;
-    // $max_price = isset($_POST['max_price']) ? (int) $_POST['max_price'] : $store_max;
-
-    // $args['meta_query'][] = cwc_price_meta_query($min_price, $max_price);
-
-    /* Сортировка */
+    // сортировка
     $ordering = WC()->query->get_catalog_ordering_args($_POST['orderby'] ?? '');
     $args['orderby'] = $ordering['orderby'];
     $args['order']   = $ordering['order'];
@@ -290,7 +232,6 @@ function cwc_filter_products()
         $args['meta_key'] = $ordering['meta_key'];
     }
 
-    /* Запрос */
     $query = new WP_Query($args);
 
     ob_start();
@@ -306,7 +247,11 @@ function cwc_filter_products()
 
     wp_reset_postdata();
 
+    // 🔥 фильтры пересчитываются
+    $filters_html = cwc_render_filters_with_context($current_cat_id, $active_filters);
+
     wp_send_json_success([
-        'html' => ob_get_clean()
+        'html'    => ob_get_clean(),
+        'filters' => $filters_html
     ]);
 }
