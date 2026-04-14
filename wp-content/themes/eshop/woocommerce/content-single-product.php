@@ -30,10 +30,21 @@ if (post_password_required()) {
 
 
     <div class="container">
+        <?php
+        $delivery_info = carbon_get_theme_option('delivery_info');
+        ?>
         <div class="product-tabs">
             <div class="product-tabs__nav">
                 <button class="product-tabs__btn active" data-tab="desc">Описание</button>
                 <button class="product-tabs__btn" data-tab="chars">Характеристики</button>
+                <?php
+                if (!empty($delivery_info)) {
+                ?>
+                    <button class="product-tabs__btn" data-tab="delivery">Доставка</button>
+                <?php
+                }
+
+                ?>
             </div>
 
             <div class="product-tabs__content">
@@ -44,6 +55,21 @@ if (post_password_required()) {
                 <div class="product-tabs__pane" data-tab="chars">
                     <?php wc_display_product_attributes($product); ?>
                 </div>
+                <?php
+                if (!empty($delivery_info)) {
+                ?>
+                    <div class="product-tabs__pane" data-tab="delivery">
+                        <?php echo $delivery_info; ?>
+                    </div>
+                <?php
+                }
+                ?>
+
+
+
+
+
+
             </div>
         </div>
     </div>

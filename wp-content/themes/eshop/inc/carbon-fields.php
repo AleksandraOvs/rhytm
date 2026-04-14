@@ -48,7 +48,7 @@ function site_carbon()
 
     //prefooter
     Container::make('theme_options', 'Настройки темы')
-        ->add_fields([
+        ->add_tab(__('Общие'), array(
             Field::make('association', 'footer_page', 'Выбор шаблона для префутера')
                 ->set_types([
                     [
@@ -57,5 +57,11 @@ function site_carbon()
                     ]
                 ])
                 ->help_text('Выбор из имеющихся блоков (в разделе "Страницы") для вывода префутера - отображается на всех страницах сайта, кросе главной и страницы оформления заказа перед футером')
-        ]);
+        ))
+
+        ->add_tab(__('Товары'), array(
+            Field::make('rich_text', 'delivery_info', 'Текст с информацией о доставке')
+
+                ->help_text('Этот текст выводится во вкладке Доставка на карточке товара')
+        ));
 }
