@@ -292,7 +292,7 @@ add_action('wp_footer', function () {
             }
 
             .variations tbody tr {
-                flex-direction: row;
+                /* flex-direction: row; */
                 width: 100%;
                 max-width: 100%;
             }
