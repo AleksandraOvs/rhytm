@@ -206,9 +206,9 @@ function cwc_shop_filters_shortcode()
 
         <?php
         echo cwc_render_attribute_filter('pa_czvet', 'Цвет', $current_cat_id);
+        echo cwc_render_attribute_filter('pa_podkluchenie', 'Подключение', $current_cat_id);
         echo cwc_render_attribute_filter('pa_kolichestvo-sec', 'Количество секций', $current_cat_id);
         echo cwc_render_attribute_filter('pa_pl-obogreva', 'Площадь обогрева', $current_cat_id);
-        echo cwc_render_attribute_filter('pa_podkluchenie', 'Подключение', $current_cat_id);
         echo cwc_render_attribute_filter('pa_teplootdacha', 'Теплоотдача', $current_cat_id);
         ?>
 
