@@ -817,6 +817,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .cross-product__slide__content h2 {
