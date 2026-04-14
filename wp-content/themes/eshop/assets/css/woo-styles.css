@@ -290,6 +290,10 @@ del .woocommerce-Price-amount.amount bdi {
     margin-top: 10px;
 }
 
+.woocommerce-product-attributes__value {
+    text-align: right;
+}
+
 .product-tabs__btn.active {
     background: var(--theme-color-accent);
     border-bottom: 1px solid transparent;
@@ -693,6 +697,11 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.woocommerce-product-attributes__label,
+.woocommerce-product-attributes__value {
+    width: calc(50% - 10px);
 }
 
 .woocommerce-product-attributes__item {
