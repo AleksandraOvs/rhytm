@@ -215,9 +215,10 @@ del .woocommerce-Price-amount.amount bdi {
 .woocommerce ul.products li.product .button {
     display: block;
     margin-top: 1em;
-    width: 100%;
-    max-width: 100%;
+    width: 80%;
+    min-width: max-content;
     text-align: center;
+    margin: 1em auto 20px;
 }
 
 .product-inner {
@@ -817,7 +818,7 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
 @media (max-width: 576px) {
     .product-inner {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
         gap: 20px;
     }
 
@@ -902,11 +903,4 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
         padding-bottom: 1em;
     }
 
-    .variations tbody {
-        gap: 20px;
-    }
-
-    .variations tbody tr {
-        max-width: calc(50% - 10px);
-    }
 }
