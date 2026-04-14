@@ -1,6 +1,9 @@
 <?php
 
-// Добавить поле при создании
+// ================================
+// Поле изображения для pa_czvet
+// ================================
+
 add_action('pa_czvet_add_form_fields', function () {
 ?>
     <div class="form-field">
@@ -12,7 +15,6 @@ add_action('pa_czvet_add_form_fields', function () {
 <?php
 });
 
-// Добавить поле при редактировании
 add_action('pa_czvet_edit_form_fields', function ($term) {
     $image = get_term_meta($term->term_id, 'czvet_image', true);
 ?>
@@ -39,19 +41,22 @@ function save_czvet_image($term_id)
     }
 }
 
+
+// ================================
+// Media uploader
+// ================================
+
 add_action('admin_footer', function () {
 ?>
     <script>
         jQuery(function($) {
+
             let frame;
 
             $(document).on('click', '.upload_image_button', function(e) {
                 e.preventDefault();
 
-                if (frame) {
-                    frame.open();
-                    return;
-                }
+                if (frame) return frame.open();
 
                 frame = wp.media({
                     title: 'Выбрать изображение',
@@ -69,131 +74,210 @@ add_action('admin_footer', function () {
 
                 frame.open();
             });
+
         });
     </script>
 <?php
 });
 
 
-add_filter('woocommerce_dropdown_variation_attribute_options_html', 'czvet_as_images', 10, 2);
+// ================================
+// Универсальный вывод вариаций
+// ================================
 
-function czvet_as_images($html, $args)
+add_filter('woocommerce_dropdown_variation_attribute_options_html', 'custom_variations_as_divs', 20, 2);
+
+function custom_variations_as_divs($html, $args)
 {
-
-    // работаем только с нашим атрибутом
-    if ($args['attribute'] !== 'pa_czvet') {
-        return $html;
-    }
-
-    $options   = $args['options'];
+    $attribute = $args['attribute'];
     $product   = $args['product'];
+    $options   = $args['options'];
 
     if (empty($options)) return $html;
 
-    $terms = wc_get_product_terms($product->get_id(), 'pa_czvet', ['fields' => 'all']);
+    $selected = $args['selected'] ?: '';
+
+    // дефолтные значения товара
+    $default_attributes = $product->get_default_attributes();
+
+    if (!$selected && isset($default_attributes[$attribute])) {
+        $selected = $default_attributes[$attribute];
+    }
+
+    $terms = wc_get_product_terms($product->get_id(), $attribute, ['fields' => 'all']);
 
     ob_start();
 
-    echo '<div class="czvet-variations" data-attribute_name="attribute_pa_czvet">';
+    echo '<div class="wc-custom-attribute" data-attribute_name="attribute_' . esc_attr($attribute) . '">';
 
     foreach ($terms as $term) {
 
         if (!in_array($term->slug, $options)) continue;
 
-        $image_id = get_term_meta($term->term_id, 'czvet_image', true);
-        $image = $image_id ? wp_get_attachment_image_url($image_id, 'thumbnail') : '';
+        $active = ($selected === $term->slug) ? 'active' : '';
 
-        echo '<div class="czvet-item" data-value="' . esc_attr($term->slug) . '">';
+        if ($attribute === 'pa_czvet') {
 
-        if ($image) {
-            echo '<img src="' . esc_url($image) . '" alt="' . esc_attr($term->name) . '">';
+            $image_id = get_term_meta($term->term_id, 'czvet_image', true);
+            $image = $image_id ? wp_get_attachment_image_url($image_id, 'thumbnail') : '';
+
+            echo '<div class="wc-attr-item czvet-item ' . $active . '" data-value="' . esc_attr($term->slug) . '">';
+
+            if ($image) {
+                echo '<img src="' . esc_url($image) . '" alt="">';
+            }
+
+            echo '<span>' . esc_html($term->name) . '</span>';
+            echo '</div>';
+        } else {
+
+            echo '<div class="wc-attr-item generic-item ' . $active . '" data-value="' . esc_attr($term->slug) . '">';
+            echo esc_html($term->name);
+            echo '</div>';
         }
-
-        echo '<span>' . esc_html($term->name) . '</span>';
-        echo '</div>';
     }
 
     echo '</div>';
 
-    // скрываем оригинальный select (но он нужен!)
-    $html .= '<style>select[name="attribute_pa_czvet"]{display:none;}</style>';
-
     return ob_get_clean() . $html;
 }
 
+
+// ================================
+// JS логика + дефолты + цена
+// ================================
+
 add_action('wp_footer', function () {
-    if (!is_product()) return;
 ?>
     <script>
         jQuery(function($) {
 
-            $('.czvet-item').on('click', function() {
+            function updateSelect($wrap, value) {
+                const attr = $wrap.data('attribute_name');
+                const $select = $('select[name="' + attr + '"]');
 
-                const value = $(this).data('value');
-                const container = $(this).closest('.czvet-variations');
-                const attribute = container.data('attribute_name');
+                $select.val(value).trigger('change');
+            }
 
-                // активный класс
-                container.find('.czvet-item').removeClass('active');
-                $(this).addClass('active');
+            $(document).on('click', '.wc-attr-item', function() {
 
-                // находим оригинальный select
-                const select = $('select[name="' + attribute + '"]');
+                const $item = $(this);
+                const $wrap = $item.closest('.wc-custom-attribute');
 
-                select.val(value).trigger('change');
+                $wrap.find('.wc-attr-item').removeClass('active');
+                $item.addClass('active');
+
+                updateSelect($wrap, $item.data('value'));
+            });
+
+            $('.wc-custom-attribute').each(function() {
+
+                const $wrap = $(this);
+                const $active = $wrap.find('.wc-attr-item.active');
+
+                if ($active.length) {
+                    updateSelect($wrap, $active.data('value'));
+                }
             });
 
         });
     </script>
+
     <style>
-        select[name="attribute_pa_czvet"] {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none;
+        /* скрываем все WooCommerce селекты атрибутов */
+        .single-product select[name^="attribute_"] {
+            display: none !important;
         }
 
-        .czvet-variations {
+        .variations tbody {
             display: flex;
-            gap: 0;
-        }
-
-        .czvet-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 5px;
-        }
-
-        .variations_form.cart table.variations tbody tr label {
-            position: absolute;
-            display: none;
-        }
-
-        .woocommerce div.product form.cart.variations_form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-        }
-
-        .single_variation_wrap {
-            display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 40px;
         }
 
+        .variations tbody tr {
+            max-width: calc(50% - 20px);
+        }
+
+        .variations tbody tr {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .woocommerce div.product form.cart .variations th {
+            border: 0;
+            line-height: 100%;
+        }
+
+        .variations tbody tr td.value .wc-custom-attribute {
+            display: flex;
+            gap: 10px;
+            margin: 0;
+        }
+
+        /* контейнер атрибутов */
+        .wc-custom-attribute {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px 0;
+        }
+
+        /* элементы */
+        .wc-attr-item {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            user-select: none;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .wc-attr-item span {
+            font-size: 12px;
+        }
+
+        /* hover */
+        .wc-attr-item:hover {
+            border-color: #000;
+        }
+
+        /* active */
+        /* .wc-attr-item.active {
+            border-color: #000;
+            background: #f5f5f5;
+        } */
+
+        /* цветовые варианты */
         .czvet-item img {
             width: 50px;
             height: 50px;
-            display: block;
-            overflow: hidden;
+            object-fit: cover;
+            margin-right: 0;
             border-radius: 100%;
-            border: 2px solid rgba(0, 0, 0, .1);
-            transition: all .5s linear;
         }
 
-        .czvet-item.active img {
+        .wc-attr-item.czvet-item.active img {
             border: 2px solid var(--theme-color-accent);
+        }
+
+        .wc-attr-item.czvet-item.active span {
+            font-weight: 600;
+        }
+
+        .wc-attr-item.generic-item {
+            padding: 5px;
+            line-height: 1;
+            border: 2px solid #cacaca;
+            border-radius: 3px;
+        }
+
+        .wc-attr-item.generic-item.active {
+            border-color: var(--theme-color-accent);
         }
     </style>
 <?php
