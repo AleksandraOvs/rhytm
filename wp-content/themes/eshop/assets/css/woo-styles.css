@@ -275,6 +275,21 @@ del .woocommerce-Price-amount.amount bdi {
     margin-top: 12px;
 }
 
+.product-tabs__pane h3 {
+    font-size: 18px;
+    margin: 16px 0;
+    font-weight: 600;
+}
+
+.product-tabs__pane ul {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.product-tabs__pane ul li:not(:first-child) {
+    margin-top: 10px;
+}
+
 .product-tabs__btn.active {
     background: var(--theme-color-accent);
     border-bottom: 1px solid transparent;
