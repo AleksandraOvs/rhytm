@@ -724,6 +724,23 @@ button.single_add_to_cart_button.button.alt.disabled:hover {
     margin-top: 10px;
 }
 
+.variations tbody {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.variations tbody tr {
+    max-width: 50%;
+}
+
+.woocommerce div.product form.cart .variations select {
+    border: 1px solid #cacaca;
+    padding: 7px;
+    border-radius: 5px;
+}
+
 @media (max-width: 992px) {
     .single-product__related .container:last-child {
         overflow-x: visible;
