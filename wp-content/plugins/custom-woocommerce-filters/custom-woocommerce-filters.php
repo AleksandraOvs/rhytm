@@ -9,6 +9,16 @@ Author: PurpleWeb
 if (!defined('ABSPATH')) exit;
 
 /* ---------------------------------------------------
+ * ЛОГИРОВАНИЕ (WP DEBUG)
+ * --------------------------------------------------- */
+function cwc_log($label, $data = null)
+{
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('[CWC] ' . $label . ': ' . print_r($data, true));
+    }
+}
+
+/* ---------------------------------------------------
  * Подключение JS и CSS
  * --------------------------------------------------- */
 add_action('wp_enqueue_scripts', function () {
@@ -43,6 +53,9 @@ function cwc_get_active_filters()
             $filters[$m[1]] = (array) $value;
         }
     }
+
+    // 🔥 LOG: какие фильтры распарсились
+    cwc_log('PARSED ACTIVE FILTERS', $filters);
 
     return $filters;
 }
@@ -98,6 +111,12 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
                         'terms'    => $term->slug,
                     ];
 
+                    // 🔥 LOG: проверка каждого термина
+                    cwc_log('CHECK TERM', [
+                        'taxonomy' => $taxonomy,
+                        'term'     => $term->slug,
+                    ]);
+
                     $query = new WP_Query([
                         'post_type' => 'product',
                         'posts_per_page' => 1,
@@ -147,7 +166,6 @@ function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
 
     foreach ($taxonomies as $taxonomy => $title) {
 
-        // убираем текущий фильтр
         $filters_for_this = $active_filters;
         unset($filters_for_this[$taxonomy]);
 
@@ -159,10 +177,8 @@ function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
         );
     }
 
-    // 🔥 ДОБАВЛЯЕМ КНОПКИ ВНУТРЬ (чтобы не пропадали после AJAX)
     $html .= '
         <div class="cwc-filter-actions">
-           
             <button id="cwc-reset-filters" class="cwc-reset-filters">
                 Сбросить фильтры
             </button>
@@ -188,8 +204,6 @@ function cwc_shop_filters_shortcode()
         echo cwc_render_filters_with_context($current_cat_id);
         ?>
 
-
-
     </div>
 
 <?php
@@ -206,7 +220,6 @@ function cwc_get_default_attributes_meta_query($active_filters)
 
     foreach ($active_filters as $taxonomy => $terms) {
 
-        // pa_color → attribute_pa_color
         $meta_key = 'attribute_' . $taxonomy;
 
         $meta_query[] = [
@@ -216,10 +229,11 @@ function cwc_get_default_attributes_meta_query($active_filters)
         ];
     }
 
+    // 🔥 LOG: meta query генерация
+    cwc_log('DEFAULT META QUERY', $meta_query);
+
     return $meta_query;
 }
-
-
 
 /* ---------------------------------------------------
  * AJAX
@@ -229,19 +243,14 @@ add_action('wp_ajax_nopriv_cwc_filter_products', 'cwc_filter_products');
 
 function cwc_filter_products()
 {
-    $debug = [
-        'received_post'   => $_POST,
-        'active_filters'  => [],
-        'tax_queries'     => [],
-        'meta_queries'    => [],
-        'final_args'      => [],
-        'found_posts'     => 0,
-    ];
+    // 🔥 LOG: raw request
+    cwc_log('RAW REQUEST', $_POST);
 
     $current_cat_id = !empty($_POST['current_cat_id']) ? (int) $_POST['current_cat_id'] : 0;
     $active_filters = cwc_get_active_filters();
 
-    $debug['active_filters'] = $active_filters;
+    // 🔥 LOG: parsed filters
+    cwc_log('ACTIVE FILTERS', $active_filters);
 
     $args = [
         'post_type'      => 'product',
@@ -270,33 +279,30 @@ function cwc_filter_products()
             'operator' => 'IN',
         ];
 
-        $debug['tax_queries'][] = [
+        // 🔥 LOG: tax query step
+        cwc_log('TAX QUERY STEP', [
             'taxonomy' => $taxonomy,
-            'terms'    => $terms,
-        ];
+            'terms'    => $terms
+        ]);
     }
 
-    // 🔥 default attributes (если есть)
+    // 🔥 default attributes
     $default_meta_query = cwc_get_default_attributes_meta_query($active_filters);
 
     if (!empty($default_meta_query)) {
 
         $meta_block = [
             'relation' => 'OR',
-
-            // fallback для simple товаров
             [
                 'key'     => '_product_type',
                 'compare' => 'NOT EXISTS',
             ],
-
-            // variation attributes
             ...$default_meta_query
         ];
 
         $args['meta_query'][] = $meta_block;
 
-        $debug['meta_queries'][] = $meta_block;
+        cwc_log('META QUERY BLOCK', $meta_block);
     }
 
     // сортировка
@@ -308,12 +314,12 @@ function cwc_filter_products()
         $args['meta_key'] = $ordering['meta_key'];
     }
 
-    // 🔥 DEBUG FINAL ARGS
-    $debug['final_args'] = $args;
+    // 🔥 LOG FINAL ARGS
+    cwc_log('FINAL WP_QUERY ARGS', $args);
 
     $query = new WP_Query($args);
 
-    $debug['found_posts'] = $query->found_posts;
+    cwc_log('FOUND POSTS', $query->found_posts);
 
     ob_start();
 
@@ -332,7 +338,6 @@ function cwc_filter_products()
 
     wp_send_json_success([
         'html'    => ob_get_clean(),
-        'filters' => $filters_html,
-        'debug'   => $debug
+        'filters' => $filters_html
     ]);
 }
