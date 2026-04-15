@@ -107,9 +107,13 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
                     if (!$query->found_posts) continue;
                 ?>
 
+                    <?php
+                    $is_active = isset($active_filters[$taxonomy]) && in_array($term->slug, $active_filters[$taxonomy]);
+                    ?>
+
                     <li>
                         <a href="#"
-                            class="filter-item"
+                            class="filter-item <?php echo $is_active ? 'active' : ''; ?>"
                             data-slug="<?php echo esc_attr($term->slug); ?>"
                             data-taxonomy="<?php echo esc_attr($taxonomy); ?>">
                             <?php echo esc_html($term->name); ?>

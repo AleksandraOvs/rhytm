@@ -3,35 +3,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const filtersWrapper = document.querySelector('.sidebar-area-wrapper._filters');
     const productsWrapper = document.querySelector('.products');
 
+    let activeFilters = {};
+
     if (!filtersWrapper || !productsWrapper) return;
 
+    // =========================
+    // 🔥 Синхронизация из DOM
+    // =========================
+    function syncActiveFiltersFromDOM() {
+        activeFilters = {};
+
+        document.querySelectorAll('.filter-item.active').forEach(el => {
+            const taxonomy = el.dataset.taxonomy;
+            const slug = decodeURIComponent(el.dataset.slug);
+
+            if (!activeFilters[taxonomy]) {
+                activeFilters[taxonomy] = [];
+            }
+
+            activeFilters[taxonomy].push(slug);
+        });
+
+        // instock
+        const instock = document.querySelector('.instock-filter.active');
+        if (instock) {
+            activeFilters.instock = 1;
+        }
+    }
+
+    // =========================
+    // 🔥 Сбор данных
+    // =========================
     function getFiltersData() {
         const data = {
             action: 'cwc_filter_products',
             current_cat_id: filtersWrapper.dataset.currentCat || 0
         };
 
-        // собираем все активные фильтры
-        filtersWrapper.querySelectorAll('.filter-item.active').forEach(el => {
-            const taxonomy = el.dataset.taxonomy;
-            const slug = decodeURIComponent(el.dataset.slug);
-
-            if (taxonomy && slug) {
-                // поддержка нескольких значений (массив)
-                if (!data['filter_' + taxonomy]) data['filter_' + taxonomy] = [];
-                data['filter_' + taxonomy].push(slug);
+        for (let tax in activeFilters) {
+            if (tax === 'instock') {
+                data.instock = 1;
+                continue;
             }
-        });
 
-        // "В наличии"
-        const instock = filtersWrapper.querySelector('.instock-filter.active');
-        if (instock) {
-            data.instock = 1;
+            if (activeFilters[tax].length) {
+                data['filter_' + tax] = activeFilters[tax];
+            }
         }
 
         return data;
     }
 
+    // =========================
+    // 🔥 AJAX
+    // =========================
     function applyFilters() {
         const data = getFiltersData();
 
@@ -39,66 +64,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(cwc_ajax_object.ajax_url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(data)
         })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
 
-                    // 🔥 товары
+                    // товары
                     productsWrapper.innerHTML = res.data.html;
 
-                    // 🔥 фильтры (ОЧЕНЬ ВАЖНО)
-                    const filtersWrapper = document.querySelector('.sidebar-area-wrapper._filters');
-                    if (filtersWrapper && res.data.filters) {
-                        filtersWrapper.innerHTML = res.data.filters;
+                    // фильтры
+                    const newFiltersWrapper = document.querySelector('.sidebar-area-wrapper._filters');
+                    if (newFiltersWrapper && res.data.filters) {
+                        newFiltersWrapper.innerHTML = res.data.filters;
                     }
+
+                    // 🔥 ВАЖНО — вернуть active состояние
+                    restoreActiveClasses();
 
                 } else {
                     console.warn('Ошибка фильтрации', res);
                 }
+            })
+            .catch(err => {
+                console.error('FETCH ERROR:', err);
             })
             .finally(() => {
                 productsWrapper.classList.remove('loading');
             });
     }
 
-    // клик по фильтру
-    filtersWrapper.addEventListener('click', (e) => {
+    // =========================
+    // 🔥 Восстановление active
+    // =========================
+    function restoreActiveClasses() {
+        document.querySelectorAll('.filter-item').forEach(el => {
+            const taxonomy = el.dataset.taxonomy;
+            const slug = decodeURIComponent(el.dataset.slug);
+
+            if (
+                activeFilters[taxonomy] &&
+                activeFilters[taxonomy].includes(slug)
+            ) {
+                el.classList.add('active');
+            }
+        });
+
+        if (activeFilters.instock) {
+            const instock = document.querySelector('.instock-filter');
+            if (instock) instock.classList.add('active');
+        }
+    }
+
+    // =========================
+    // 🔥 Клик по фильтру
+    // =========================
+    document.addEventListener('click', (e) => {
+
         const filterItem = e.target.closest('.filter-item');
         if (!filterItem) return;
 
         e.preventDefault();
 
         const taxonomy = filterItem.dataset.taxonomy;
+        const slug = decodeURIComponent(filterItem.dataset.slug);
 
-        // переключение активного состояния
-        if (filterItem.classList.contains('active')) {
-            filterItem.classList.remove('active');
+        if (!activeFilters[taxonomy]) {
+            activeFilters[taxonomy] = [];
+        }
+
+        // toggle
+        if (activeFilters[taxonomy].includes(slug)) {
+            activeFilters[taxonomy] = activeFilters[taxonomy].filter(v => v !== slug);
         } else {
-            // для одиночного выбора атрибута снимаем другие
-            filtersWrapper.querySelectorAll(`.filter-item.active[data-taxonomy="${taxonomy}"]`)
-                .forEach(el => el.classList.remove('active'));
-
-            filterItem.classList.add('active');
+            activeFilters[taxonomy].push(slug);
         }
 
         applyFilters();
     });
 
-    // кнопки Apply / Reset
-    filtersWrapper.addEventListener('click', (e) => {
-        if (e.target.matches('#cwc-apply-filters')) {
-            applyFilters();
+    // =========================
+    // 🔥 instock
+    // =========================
+    document.addEventListener('click', (e) => {
+        const instock = e.target.closest('.instock-filter');
+        if (!instock) return;
+
+        e.preventDefault();
+
+        if (activeFilters.instock) {
+            delete activeFilters.instock;
+        } else {
+            activeFilters.instock = 1;
         }
 
-        if (e.target.matches('#cwc-reset-filters')) {
-            filtersWrapper.querySelectorAll('.filter-item.active')
-                .forEach(el => el.classList.remove('active'));
+        applyFilters();
+    });
 
+    // =========================
+    // 🔥 Reset
+    // =========================
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('#cwc-reset-filters')) {
+            e.preventDefault();
+
+            activeFilters = {};
             applyFilters();
         }
     });
+
+    // =========================
+    // 🔥 Инициализация
+    // =========================
+    syncActiveFiltersFromDOM();
 
 });
