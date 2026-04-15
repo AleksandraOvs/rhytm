@@ -229,8 +229,19 @@ add_action('wp_ajax_nopriv_cwc_filter_products', 'cwc_filter_products');
 
 function cwc_filter_products()
 {
+    $debug = [
+        'received_post'   => $_POST,
+        'active_filters'  => [],
+        'tax_queries'     => [],
+        'meta_queries'    => [],
+        'final_args'      => [],
+        'found_posts'     => 0,
+    ];
+
     $current_cat_id = !empty($_POST['current_cat_id']) ? (int) $_POST['current_cat_id'] : 0;
     $active_filters = cwc_get_active_filters();
+
+    $debug['active_filters'] = $active_filters;
 
     $args = [
         'post_type'      => 'product',
@@ -251,31 +262,41 @@ function cwc_filter_products()
 
     // атрибуты
     foreach ($active_filters as $taxonomy => $terms) {
+
         $args['tax_query'][] = [
             'taxonomy' => $taxonomy,
             'field'    => 'slug',
             'terms'    => array_map('wc_clean', $terms),
             'operator' => 'IN',
         ];
+
+        $debug['tax_queries'][] = [
+            'taxonomy' => $taxonomy,
+            'terms'    => $terms,
+        ];
     }
 
-    // 🔥 default attributes (для вариативных товаров)
+    // 🔥 default attributes (если есть)
     $default_meta_query = cwc_get_default_attributes_meta_query($active_filters);
 
     if (!empty($default_meta_query)) {
 
-        $args['meta_query'][] = [
+        $meta_block = [
             'relation' => 'OR',
 
-            // simple товары (чтобы не отвалились)
+            // fallback для simple товаров
             [
-                'key'     => '_default_attributes',
+                'key'     => '_product_type',
                 'compare' => 'NOT EXISTS',
             ],
 
-            // вариативные товары по default атрибутам
+            // variation attributes
             ...$default_meta_query
         ];
+
+        $args['meta_query'][] = $meta_block;
+
+        $debug['meta_queries'][] = $meta_block;
     }
 
     // сортировка
@@ -287,7 +308,12 @@ function cwc_filter_products()
         $args['meta_key'] = $ordering['meta_key'];
     }
 
+    // 🔥 DEBUG FINAL ARGS
+    $debug['final_args'] = $args;
+
     $query = new WP_Query($args);
+
+    $debug['found_posts'] = $query->found_posts;
 
     ob_start();
 
@@ -302,11 +328,11 @@ function cwc_filter_products()
 
     wp_reset_postdata();
 
-    // 🔥 фильтры пересчитываются
     $filters_html = cwc_render_filters_with_context($current_cat_id, $active_filters);
 
     wp_send_json_success([
         'html'    => ob_get_clean(),
-        'filters' => $filters_html
+        'filters' => $filters_html,
+        'debug'   => $debug
     ]);
 }
