@@ -198,6 +198,30 @@ function cwc_shop_filters_shortcode()
 add_shortcode('shop_filters', 'cwc_shop_filters_shortcode');
 
 /* ---------------------------------------------------
+ * Default attributes для вариативных товаров
+ * --------------------------------------------------- */
+function cwc_get_default_attributes_meta_query($active_filters)
+{
+    $meta_query = [];
+
+    foreach ($active_filters as $taxonomy => $terms) {
+
+        // pa_color → attribute_pa_color
+        $meta_key = 'attribute_' . $taxonomy;
+
+        $meta_query[] = [
+            'key'     => $meta_key,
+            'value'   => $terms,
+            'compare' => 'IN',
+        ];
+    }
+
+    return $meta_query;
+}
+
+
+
+/* ---------------------------------------------------
  * AJAX
  * --------------------------------------------------- */
 add_action('wp_ajax_cwc_filter_products', 'cwc_filter_products');
@@ -213,6 +237,7 @@ function cwc_filter_products()
         'post_status'    => 'publish',
         'posts_per_page' => 12,
         'tax_query'      => ['relation' => 'AND'],
+        'meta_query'     => ['relation' => 'AND'],
     ];
 
     // категория
@@ -231,6 +256,25 @@ function cwc_filter_products()
             'field'    => 'slug',
             'terms'    => array_map('wc_clean', $terms),
             'operator' => 'IN',
+        ];
+    }
+
+    // 🔥 default attributes (для вариативных товаров)
+    $default_meta_query = cwc_get_default_attributes_meta_query($active_filters);
+
+    if (!empty($default_meta_query)) {
+
+        $args['meta_query'][] = [
+            'relation' => 'OR',
+
+            // simple товары (чтобы не отвалились)
+            [
+                'key'     => '_default_attributes',
+                'compare' => 'NOT EXISTS',
+            ],
+
+            // вариативные товары по default атрибутам
+            ...$default_meta_query
         ];
     }
 
