@@ -243,8 +243,21 @@ add_action('wp_ajax_nopriv_cwc_filter_products', 'cwc_filter_products');
 
 function cwc_filter_products()
 {
+    // 🔥 FIX: заранее объявляем debug (убирает warning IDE)
+    $debug = [
+        'received_post'   => [],
+        'active_filters'  => [],
+        'tax_queries'     => [],
+        'meta_queries'    => [],
+        'final_args'      => [],
+        'found_posts'     => 0,
+    ];
+
     // 🔥 LOG: raw request
     cwc_log('RAW REQUEST', $_POST);
+
+    $debug['received_post'] = $_POST;
+
 
     $current_cat_id = !empty($_POST['current_cat_id']) ? (int) $_POST['current_cat_id'] : 0;
     $active_filters = cwc_get_active_filters();
@@ -338,6 +351,7 @@ function cwc_filter_products()
 
     wp_send_json_success([
         'html'    => ob_get_clean(),
-        'filters' => $filters_html
+        'filters' => $filters_html,
+        'debug'   => $debug, // 🔥 уже есть — просто используем
     ]);
 }
