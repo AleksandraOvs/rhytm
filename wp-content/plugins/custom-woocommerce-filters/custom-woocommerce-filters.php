@@ -159,6 +159,16 @@ function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
         );
     }
 
+    // 🔥 ДОБАВЛЯЕМ КНОПКИ ВНУТРЬ (чтобы не пропадали после AJAX)
+    $html .= '
+        <div class="cwc-filter-actions">
+           
+            <button id="cwc-reset-filters" class="cwc-reset-filters">
+                Сбросить фильтры
+            </button>
+        </div>
+    ';
+
     return $html;
 }
 
@@ -178,10 +188,7 @@ function cwc_shop_filters_shortcode()
         echo cwc_render_filters_with_context($current_cat_id);
         ?>
 
-        <div class="cwc-filter-actions">
-            <button id="cwc-apply-filters">Применить</button>
-            <button id="cwc-reset-filters">Сбросить</button>
-        </div>
+
 
     </div>
 
