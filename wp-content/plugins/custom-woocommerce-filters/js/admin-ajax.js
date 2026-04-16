@@ -133,11 +133,17 @@ document.addEventListener('DOMContentLoaded', () => {
             activeFilters[taxonomy] = [];
         }
 
-        // toggle
         if (activeFilters[taxonomy].includes(slug)) {
             activeFilters[taxonomy] = activeFilters[taxonomy].filter(v => v !== slug);
+            filterItem.classList.remove('active');
         } else {
             activeFilters[taxonomy].push(slug);
+            filterItem.classList.add('active');
+        }
+
+        // 🔥 критично
+        if (activeFilters[taxonomy].length === 0) {
+            delete activeFilters[taxonomy];
         }
 
         applyFilters();
