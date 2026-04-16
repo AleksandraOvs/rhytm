@@ -54,7 +54,7 @@ section.widget {
     background: var(--theme-color-secondary);
     border-radius: 5px;
     font-size: 12px;
-    width: max-content;
+    width: 80px;
     line-height: 1;
     display: flex;
     align-items: center;
