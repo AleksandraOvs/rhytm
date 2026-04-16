@@ -99,6 +99,64 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
 
     if (empty($terms) || is_wp_error($terms)) return '';
 
+    $items_html = '';
+
+    foreach ($terms as $term) {
+
+        $tax_query = ['relation' => 'AND'];
+
+        // категория
+        if ($current_cat_id) {
+            $tax_query[] = [
+                'taxonomy' => 'product_cat',
+                'field'    => 'term_id',
+                'terms'    => $current_cat_id,
+            ];
+        }
+
+        // активные фильтры
+        foreach ($active_filters as $tax => $values) {
+            $tax_query[] = [
+                'taxonomy' => $tax,
+                'field'    => 'slug',
+                'terms'    => $values,
+                'operator' => 'IN',
+            ];
+        }
+
+        // текущий термин
+        $tax_query[] = [
+            'taxonomy' => $taxonomy,
+            'field'    => 'slug',
+            'terms'    => $term->slug,
+        ];
+
+        $query = new WP_Query([
+            'post_type' => 'product',
+            'posts_per_page' => 1,
+            'tax_query' => $tax_query,
+        ]);
+
+        if (!$query->found_posts) continue;
+
+        $is_active = isset($active_filters[$taxonomy]) && in_array($term->slug, $active_filters[$taxonomy]);
+
+        $items_html .= '<li>
+        <a href="#"
+            class="filter-item ' . ($is_active ? 'active' : '') . '"
+            data-slug="' . esc_attr($term->slug) . '"
+            data-taxonomy="' . esc_attr($taxonomy) . '">
+            ' . esc_html($term->name) . '
+        </a>
+    </li>';
+    }
+
+    // 🔥 ЕСЛИ НЕТ ЭЛЕМЕНТОВ — ВООБЩЕ НИЧЕГО НЕ ВЫВОДИМ
+    if (empty($items_html)) {
+        return '';
+    }
+
+    // 🔥 только теперь выводим блок
     ob_start();
 ?>
 
@@ -107,67 +165,7 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
 
         <div class="sidebar-body">
             <ul class="sidebar-list" data-taxonomy="<?php echo esc_attr($taxonomy); ?>">
-
-                <?php foreach ($terms as $term):
-
-                    $tax_query = ['relation' => 'AND'];
-
-                    // категория
-                    if ($current_cat_id) {
-                        $tax_query[] = [
-                            'taxonomy' => 'product_cat',
-                            'field'    => 'term_id',
-                            'terms'    => $current_cat_id,
-                        ];
-                    }
-
-                    // активные фильтры
-                    foreach ($active_filters as $tax => $values) {
-                        $tax_query[] = [
-                            'taxonomy' => $tax,
-                            'field'    => 'slug',
-                            'terms'    => $values,
-                            'operator' => 'IN',
-                        ];
-                    }
-
-                    // текущий термин
-                    $tax_query[] = [
-                        'taxonomy' => $taxonomy,
-                        'field'    => 'slug',
-                        'terms'    => $term->slug,
-                    ];
-
-                    // 🔥 LOG: проверка каждого термина
-                    cwc_log('CHECK TERM', [
-                        'taxonomy' => $taxonomy,
-                        'term'     => $term->slug,
-                    ]);
-
-                    $query = new WP_Query([
-                        'post_type' => 'product',
-                        'posts_per_page' => 1,
-                        'tax_query' => $tax_query,
-                    ]);
-
-                    if (!$query->found_posts) continue;
-                ?>
-
-                    <?php
-                    $is_active = isset($active_filters[$taxonomy]) && in_array($term->slug, $active_filters[$taxonomy]);
-                    ?>
-
-                    <li>
-                        <a href="#"
-                            class="filter-item <?php echo $is_active ? 'active' : ''; ?>"
-                            data-slug="<?php echo esc_attr($term->slug); ?>"
-                            data-taxonomy="<?php echo esc_attr($taxonomy); ?>">
-                            <?php echo esc_html($term->name); ?>
-                        </a>
-                    </li>
-
-                <?php endforeach; ?>
-
+                <?php echo $items_html; ?>
             </ul>
         </div>
     </div>
