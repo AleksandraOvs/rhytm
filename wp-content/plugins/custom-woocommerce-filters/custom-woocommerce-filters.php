@@ -49,7 +49,7 @@ function cwc_get_active_filters()
     $filters = [];
 
     foreach ($_POST as $key => $value) {
-        if (preg_match('/^filter_(pa_[a-z0-9\-]+)$/', $key, $m)) {
+        if (preg_match('/^filter_([a-z0-9_\-]+)$/', $key, $m)) {
             $filters[$m[1]] = (array) $value;
         }
     }
@@ -65,10 +65,37 @@ function cwc_get_active_filters()
  * --------------------------------------------------- */
 function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id = 0, $active_filters = [])
 {
-    $terms = get_terms([
-        'taxonomy'   => $taxonomy,
-        'hide_empty' => false
-    ]);
+    if ($taxonomy === 'product_tag') {
+
+        global $wpdb;
+
+        // получаем теги, которые реально есть в категории
+        $term_ids = $wpdb->get_col("
+        SELECT DISTINCT tt.term_id
+        FROM {$wpdb->term_relationships} tr
+        INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
+        INNER JOIN {$wpdb->term_relationships} tr_cat ON p.ID = tr_cat.object_id
+        INNER JOIN {$wpdb->term_taxonomy} tt_cat ON tr_cat.term_taxonomy_id = tt_cat.term_taxonomy_id
+        WHERE p.post_type = 'product'
+        AND p.post_status = 'publish'
+        AND tt.taxonomy = 'product_tag'
+        AND tt_cat.taxonomy = 'product_cat'
+        " . ($current_cat_id ? "AND tt_cat.term_id = " . (int)$current_cat_id : "") . "
+    ");
+
+        $terms = get_terms([
+            'taxonomy'   => 'product_tag',
+            'hide_empty' => true,
+            'include'    => $term_ids,
+            'slug'       => ['side', 'lower'], // твои slug
+        ]);
+    } else {
+        $terms = get_terms([
+            'taxonomy'   => $taxonomy,
+            'hide_empty' => false
+        ]);
+    }
 
     if (empty($terms) || is_wp_error($terms)) return '';
 
@@ -156,7 +183,7 @@ function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
 {
     $taxonomies = [
         'pa_czvet' => 'Цвет',
-        'pa_podkluchenie' => 'Подключение',
+        'product_tag' => 'Подключение',
         'pa_kolichestvo-sec' => 'Количество секций',
         'pa_pl-obogreva' => 'Площадь обогрева',
         'pa_teplootdacha' => 'Теплоотдача',
@@ -220,6 +247,11 @@ function cwc_get_default_attributes_meta_query($active_filters)
 
     foreach ($active_filters as $taxonomy => $terms) {
 
+        // 🔥 ВОТ ЭТОТ ФИЛЬТР ДОБАВЛЯЕМ
+        if (strpos($taxonomy, 'pa_') !== 0) {
+            continue;
+        }
+
         $meta_key = 'attribute_' . $taxonomy;
 
         $meta_query[] = [
@@ -228,9 +260,6 @@ function cwc_get_default_attributes_meta_query($active_filters)
             'compare' => 'IN',
         ];
     }
-
-    // 🔥 LOG: meta query генерация
-    cwc_log('DEFAULT META QUERY', $meta_query);
 
     return $meta_query;
 }

@@ -169,3 +169,13 @@ function custom_variable_price_from($price, $product)
 
     return $price;
 }
+
+add_filter('gettext', function ($translated, $text, $domain) {
+
+    // WooCommerce Blocks
+    if ($text === 'Estimated total' || $text === 'estimated total') {
+        return 'Итого';
+    }
+
+    return $translated;
+}, 20, 3);
