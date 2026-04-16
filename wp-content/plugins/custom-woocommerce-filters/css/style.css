@@ -474,7 +474,7 @@ Start Sidebar Area Wrapper
 }
 
 .single-sidebar-wrap {
-    width: calc(100% / 3 - 6.666px);
+    width: calc(100% / 5 - 8px);
 }
 
 #cwc-reset-filters {
