@@ -129,21 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const taxonomy = filterItem.dataset.taxonomy;
         const slug = decodeURIComponent(filterItem.dataset.slug);
 
+        // инициализация
         if (!activeFilters[taxonomy]) {
             activeFilters[taxonomy] = [];
         }
 
-        if (activeFilters[taxonomy].includes(slug)) {
-            activeFilters[taxonomy] = activeFilters[taxonomy].filter(v => v !== slug);
-            filterItem.classList.remove('active');
-        } else {
-            activeFilters[taxonomy].push(slug);
-            filterItem.classList.add('active');
-        }
-
-        // 🔥 критично
-        if (activeFilters[taxonomy].length === 0) {
+        // 🔥 ВАЖНО: теперь только 1 значение на атрибут
+        if (activeFilters[taxonomy][0] === slug) {
+            // снять выбор
             delete activeFilters[taxonomy];
+        } else {
+            // заменить, а не добавлять
+            activeFilters[taxonomy] = [slug];
         }
 
         applyFilters();
