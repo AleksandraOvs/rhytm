@@ -296,35 +296,45 @@ function cwc_filter_products()
         'post_type'      => 'product',
         'post_status'    => 'publish',
         'posts_per_page' => 12,
-        'tax_query'      => ['relation' => 'AND'],
         'meta_query'     => ['relation' => 'AND'],
     ];
 
-    // категория
+    $tax_query = [];
+
+    // категория — всегда обязательна
     if ($current_cat_id) {
-        $args['tax_query'][] = [
+        $tax_query[] = [
             'taxonomy' => 'product_cat',
             'field'    => 'term_id',
             'terms'    => $current_cat_id,
         ];
     }
 
-    // атрибуты
-    foreach ($active_filters as $taxonomy => $terms) {
+    // фильтры (объединяем через OR)
+    if (!empty($active_filters)) {
 
-        $args['tax_query'][] = [
-            'taxonomy' => $taxonomy,
-            'field'    => 'slug',
-            'terms'    => array_map('wc_clean', $terms),
-            'operator' => 'IN',
-        ];
+        $or_block = ['relation' => 'OR'];
 
-        // 🔥 LOG: tax query step
-        cwc_log('TAX QUERY STEP', [
-            'taxonomy' => $taxonomy,
-            'terms'    => $terms
-        ]);
+        foreach ($active_filters as $taxonomy => $terms) {
+
+            $or_block[] = [
+                'taxonomy' => $taxonomy,
+                'field'    => 'slug',
+                'terms'    => array_map('wc_clean', $terms),
+                'operator' => 'IN',
+            ];
+
+            cwc_log('TAX QUERY STEP', [
+                'taxonomy' => $taxonomy,
+                'terms'    => $terms
+            ]);
+        }
+
+        $tax_query[] = $or_block;
     }
+
+    // применяем
+    $args['tax_query'] = $tax_query;
 
     // 🔥 default attributes
     $default_meta_query = cwc_get_default_attributes_meta_query($active_filters);
