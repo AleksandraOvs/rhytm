@@ -463,7 +463,6 @@ Start Sidebar Area Wrapper
 
 .sidebar-area-wrapper._filters {
     display: flex;
-    margin-top: 20px;
     flex-wrap: wrap;
     gap: 10px;
     padding: 20px;
@@ -499,7 +498,7 @@ Start Sidebar Area Wrapper
     background: var(--theme-color-secondary);
     padding: 5px;
     transition: all .5s linear;
-    z-index: 500;
+    z-index: 90;
 }
 
 .toggle-filter svg {
@@ -588,11 +587,13 @@ Start Sidebar Area Wrapper
         margin-top: 0;
     }
 
+
     .single-sidebar-wrap {
-        flex-direction: column;
+        flex-direction: row;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
         gap: 5px;
+
     }
 
     .cwc-filter-actions {
@@ -608,6 +609,20 @@ Start Sidebar Area Wrapper
     }
 
     .sidebar-area-wrapper._filters {
+        background: transparent;
+        border-radius: 0;
+        border-bottom: none;
+        border-top: none;
+        padding: 0;
+
+    }
+
+    .single-sidebar-wrap .sidebar-title {
+        margin: 0;
+    }
+
+    .sidebar-area-wrapper._filters .single-sidebar-wrap,
+    .sidebar-area-wrapper._filters .cwc-filter-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
@@ -617,14 +632,11 @@ Start Sidebar Area Wrapper
         overflow: hidden;
         opacity: 0;
         height: 0;
-        background: transparent;
-        border-radius: 0;
-        border-bottom: 1px solid #cacaca;
-        border-top: none;
+
         transition: all .5s linear;
     }
 
-    .sidebar-area-wrapper._filters.show {
+    .sidebar-area-wrapper._filters.show .single-sidebar-wrap {
         height: max-content;
         padding-top: 30px;
         opacity: 1;
