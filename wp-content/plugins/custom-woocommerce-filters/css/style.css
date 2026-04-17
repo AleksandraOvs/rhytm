@@ -468,7 +468,7 @@ Start Sidebar Area Wrapper
     gap: 10px;
     padding: 20px;
     background: rgba(255, 255, 255, .3);
-    border-radius: 20px;
+    border-radius: 10px;
     border-bottom: 1px solid #cacaca;
     border-top: 1px solid #fff;
 }
@@ -484,6 +484,37 @@ Start Sidebar Area Wrapper
     color: var(--theme-color-black);
     text-decoration: underline;
 }
+
+.toggle-filter {
+    width: max-content;
+    display: flex;
+    gap: 7px;
+    font-size: 14px;
+    color: var(--theme-color-black);
+    position: absolute;
+    right: 15px;
+    top: 0;
+    border: 1px solid #cacaca;
+    border-radius: 5px;
+    background: var(--theme-color-secondary);
+    padding: 5px;
+    transition: all .5s linear;
+    z-index: 500;
+}
+
+.toggle-filter svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: all .5s linear;
+}
+
+.toggle-filter:hover {
+    border-color: var(--theme-color-accent);
+    background: var(--theme-color-accent);
+}
+
 
 @media (max-width: 992px) {
 
@@ -545,6 +576,10 @@ Start Sidebar Area Wrapper
 }
 
 @media (max-width: 480px) {
+    .woocommerce-page__content .container {
+        position: relative;
+    }
+
     .sidebar-list li a.filter-item {
         font-size: 14px;
     }
@@ -559,4 +594,41 @@ Start Sidebar Area Wrapper
         align-items: flex-start;
         gap: 5px;
     }
+
+    .cwc-filter-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        /* display: block; */
+    }
+
+    button#cwc-reset-filters {
+        width: max-content;
+    }
+
+    .sidebar-area-wrapper._filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+        overflow: hidden;
+        opacity: 0;
+        height: 0;
+        background: transparent;
+        border-radius: 0;
+        border-bottom: 1px solid #cacaca;
+        border-top: none;
+        transition: all .5s linear;
+    }
+
+    .sidebar-area-wrapper._filters.show {
+        height: max-content;
+        padding-top: 30px;
+        opacity: 1;
+    }
+
+
 }

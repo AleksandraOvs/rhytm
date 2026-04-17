@@ -29,6 +29,14 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('cwc-style', plugin_dir_url(__FILE__) . 'css/style.css');
 
     wp_enqueue_script(
+        'cwc-basic-scripts',
+        plugin_dir_url(__FILE__) . 'js/scripts.js',
+        [],
+        null,
+        true
+    );
+
+    wp_enqueue_script(
         'cwc-ajax-filters',
         plugin_dir_url(__FILE__) . 'js/admin-ajax.js',
         ['jquery', 'jquery-ui-slider'],
@@ -235,8 +243,21 @@ function cwc_shop_filters_shortcode()
 
     ob_start(); ?>
 
+
+    <button class="toggle-filter">
+        <span>Фильтры</span>
+        <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 8.5V0.5M16.5 16.5V13.5M2.5 16.5V12.5M16.5 9.5V0.5M9.5 3.5V0.5M9.5 16.5V7.5" stroke="black" stroke-linecap="round" />
+            <path d="M2.5 12.5C3.60457 12.5 4.5 11.6046 4.5 10.5C4.5 9.39543 3.60457 8.5 2.5 8.5C1.39543 8.5 0.5 9.39543 0.5 10.5C0.5 11.6046 1.39543 12.5 2.5 12.5Z" stroke="black" stroke-linecap="round" />
+            <path d="M9.5 7.5C10.6046 7.5 11.5 6.60457 11.5 5.5C11.5 4.39543 10.6046 3.5 9.5 3.5C8.39543 3.5 7.5 4.39543 7.5 5.5C7.5 6.60457 8.39543 7.5 9.5 7.5Z" stroke="black" stroke-linecap="round" />
+            <path d="M16.5 13.5C17.6046 13.5 18.5 12.6046 18.5 11.5C18.5 10.3954 17.6046 9.5 16.5 9.5C15.3954 9.5 14.5 10.3954 14.5 11.5C14.5 12.6046 15.3954 13.5 16.5 13.5Z" stroke="black" stroke-linecap="round" />
+        </svg>
+
+    </button>
     <div class="sidebar-area-wrapper _filters"
         data-current-cat="<?php echo esc_attr($current_cat_id); ?>">
+
+
 
         <?php
         echo cwc_render_filters_with_context($current_cat_id);

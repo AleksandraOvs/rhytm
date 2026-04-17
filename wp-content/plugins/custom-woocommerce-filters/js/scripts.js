@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Открытие / переключение
     button.addEventListener('click', () => {
-        if (window.innerWidth <= 992) {
+        if (window.innerWidth <= 480) {
             sidebar.classList.toggle('show');
         }
     });
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Закрытие по клику вне сайдбара
     document.addEventListener('click', (e) => {
         if (
-            window.innerWidth <= 992 &&
+            window.innerWidth <= 480 &&
             sidebar.classList.contains('show') &&
             !sidebar.contains(e.target) &&
             !button.contains(e.target)
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Закрытие после применения фильтров на <576px
     if (applyBtn) {
         applyBtn.addEventListener('click', () => {
-            if (window.innerWidth < 576) {
+            if (window.innerWidth < 480) {
                 sidebar.classList.remove('show');
             }
         });
