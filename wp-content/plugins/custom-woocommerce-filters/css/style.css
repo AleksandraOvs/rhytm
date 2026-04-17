@@ -620,7 +620,6 @@ Start Sidebar Area Wrapper
         border-top: none;
         padding: 0;
         gap: 10px;
-        padding-top: 30px;
         margin-bottom: 0;
     }
 
@@ -652,6 +651,7 @@ Start Sidebar Area Wrapper
 
     .sidebar-area-wrapper._filters.show {
         padding-bottom: 20px;
+        padding-top: 30px;
     }
 
 }
