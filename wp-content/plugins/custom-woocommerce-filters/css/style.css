@@ -635,7 +635,6 @@ Start Sidebar Area Wrapper
         overflow: hidden;
         opacity: 0;
         height: 0;
-
         transition: all .5s linear;
     }
 
@@ -647,5 +646,8 @@ Start Sidebar Area Wrapper
         border-bottom: 1px solid #cacaca;
     }
 
+    .sidebar-area-wrapper._filters.show {
+        padding-bottom: 20px;
+    }
 
 }
