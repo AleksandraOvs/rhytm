@@ -183,8 +183,7 @@
 }
 
 .minicart-btn-group a.button {
-    width: 100%;
     max-width: 100%;
     text-align: Center;
-    padding: 5px;
+    padding: 5px 20px;
 }

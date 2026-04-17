@@ -14,7 +14,7 @@
     box-sizing: border-box;
     right: 0;
     max-width: 420px;
-    z-index: 4;
+    z-index: 101;
 }
 
 .mobile-menu.active {

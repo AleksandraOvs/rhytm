@@ -179,3 +179,31 @@ add_filter('gettext', function ($translated, $text, $domain) {
 
     return $translated;
 }, 20, 3);
+
+
+add_filter('gettext', 'change_coupon_text', 20, 3);
+function change_coupon_text($translated, $text, $domain)
+{
+
+    if ($domain === 'woocommerce') {
+
+        if ($text === 'Have a coupon?') {
+            return 'Использовать промокод';
+        }
+
+        if ($text === 'Have a coupon? Click here to enter your code') {
+            return 'Использовать промокод';
+        }
+
+        if ($text === 'Add a coupon') {
+            return 'Использовать промокод';
+        }
+
+        if (stripos($text, 'coupon') !== false) {
+            return 'Использовать промокод';
+        }
+    }
+
+
+    return $translated;
+}
