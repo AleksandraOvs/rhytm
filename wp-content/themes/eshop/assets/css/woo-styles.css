@@ -134,6 +134,10 @@ main.site-main {
     color: #fff;
 }
 
+body.archive #primary #main .woocommerce-page__content .container .products li a span.price bdi span {
+    font-size: .8em;
+}
+
 del .woocommerce-Price-amount.amount bdi {
     font-size: 12px;
     color: #fff;
