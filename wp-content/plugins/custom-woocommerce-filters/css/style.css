@@ -491,7 +491,7 @@ Start Sidebar Area Wrapper
     font-size: 14px;
     color: var(--theme-color-black);
     position: absolute;
-    right: 15px;
+    right: 0;
     top: 0;
     border: 1px solid #cacaca;
     border-radius: 5px;
