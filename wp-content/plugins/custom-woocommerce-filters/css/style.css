@@ -615,14 +615,14 @@ Start Sidebar Area Wrapper
         border-bottom: none;
         border-top: none;
         padding: 0;
-        gap: 5px;
+        gap: 10px;
         padding-top: 40px;
         margin-bottom: 0;
     }
 
-    .single-sidebar-wrap .sidebar-title {
+    /* .single-sidebar-wrap .sidebar-title {
         margin: 0;
-    }
+    } */
 
     .sidebar-area-wrapper._filters .single-sidebar-wrap,
     .sidebar-area-wrapper._filters .cwc-filter-actions {
@@ -642,7 +642,7 @@ Start Sidebar Area Wrapper
     .sidebar-area-wrapper._filters.show .single-sidebar-wrap {
         height: max-content;
         opacity: 1;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
         border-bottom: 1px solid #cacaca;
     }
 
