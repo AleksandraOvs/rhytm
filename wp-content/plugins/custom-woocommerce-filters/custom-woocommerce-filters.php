@@ -326,28 +326,36 @@ function cwc_filter_products()
     // фильтры (объединяем через OR)
     if (!empty($active_filters)) {
 
-        $or_block = ['relation' => 'OR'];
+        $product_tag_terms = [];
 
         foreach ($active_filters as $taxonomy => $terms) {
 
-            $or_block[] = [
-                'taxonomy' => ($taxonomy === 'product_tag_color' || $taxonomy === 'product_tag_connection')
-                    ? 'product_tag'
-                    : $taxonomy,
+            // 🔥 собираем все product_tag (цвет + подключение)
+            if ($taxonomy === 'product_tag_color' || $taxonomy === 'product_tag_connection') {
+
+                $product_tag_terms = array_merge($product_tag_terms, $terms);
+                continue;
+            }
+
+            // остальные атрибуты как есть (AND)
+            $tax_query[] = [
+                'taxonomy' => $taxonomy,
                 'field'    => 'slug',
                 'terms'    => array_map('wc_clean', $terms),
                 'operator' => 'IN',
             ];
-
-            cwc_log('TAX QUERY STEP', [
-                'taxonomy' => $taxonomy,
-                'terms'    => $terms
-            ]);
         }
 
-        $tax_query[] = $or_block;
+        // 🔥 один общий блок для product_tag
+        if (!empty($product_tag_terms)) {
+            $tax_query[] = [
+                'taxonomy' => 'product_tag',
+                'field'    => 'slug',
+                'terms'    => array_map('wc_clean', $product_tag_terms),
+                'operator' => 'AND', // 🔥 ВАЖНО
+            ];
+        }
     }
-
     // применяем
     $args['tax_query'] = $tax_query;
 
