@@ -486,7 +486,7 @@ Start Sidebar Area Wrapper
 
 .toggle-filter {
     width: max-content;
-    display: flex;
+    display: none;
     gap: 7px;
     font-size: 14px;
     color: var(--theme-color-black);
@@ -575,6 +575,10 @@ Start Sidebar Area Wrapper
 }
 
 @media (max-width: 480px) {
+    .toggle-filter {
+        display: flex;
+    }
+
     .woocommerce-page__content .container {
         position: relative;
     }
@@ -644,7 +648,6 @@ Start Sidebar Area Wrapper
         height: max-content;
         opacity: 1;
         padding-bottom: 10px;
-        border-bottom: 1px solid #cacaca;
     }
 
     .sidebar-area-wrapper._filters.show {
