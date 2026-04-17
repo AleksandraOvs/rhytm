@@ -616,7 +616,7 @@ Start Sidebar Area Wrapper
         border-top: none;
         padding: 0;
         gap: 10px;
-        padding-top: 40px;
+        padding-top: 30px;
         margin-bottom: 0;
     }
 
@@ -639,7 +639,8 @@ Start Sidebar Area Wrapper
     }
 
 
-    .sidebar-area-wrapper._filters.show .single-sidebar-wrap {
+    .sidebar-area-wrapper._filters.show .single-sidebar-wrap,
+    .sidebar-area-wrapper._filters.show .cwc-filter-actions {
         height: max-content;
         opacity: 1;
         padding-bottom: 10px;
