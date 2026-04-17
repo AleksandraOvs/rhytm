@@ -60,37 +60,49 @@ function cwc_get_active_filters()
     return $filters;
 }
 
-/* ---------------------------------------------------
- * Динамический фильтр (главный)
- * --------------------------------------------------- */
 function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id = 0, $active_filters = [])
 {
-    if ($taxonomy === 'product_tag') {
+    global $wpdb;
 
-        global $wpdb;
+    $real_taxonomy = $taxonomy;
+    $slugs = [];
 
-        // получаем теги, которые реально есть в категории
+    // 🔥 разделяем цвет и подключение
+    if ($taxonomy === 'product_tag_color') {
+        $real_taxonomy = 'product_tag';
+        $slugs = ['white', 'black'];
+    }
+
+    if ($taxonomy === 'product_tag_connection') {
+        $real_taxonomy = 'product_tag';
+        $slugs = ['side', 'lower'];
+    }
+
+    // 🔥 получаем доступные term_id внутри категории
+    if ($real_taxonomy === 'product_tag') {
+
         $term_ids = $wpdb->get_col("
-        SELECT DISTINCT tt.term_id
-        FROM {$wpdb->term_relationships} tr
-        INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-        INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
-        INNER JOIN {$wpdb->term_relationships} tr_cat ON p.ID = tr_cat.object_id
-        INNER JOIN {$wpdb->term_taxonomy} tt_cat ON tr_cat.term_taxonomy_id = tt_cat.term_taxonomy_id
-        WHERE p.post_type = 'product'
-        AND p.post_status = 'publish'
-        AND tt.taxonomy = 'product_tag'
-        AND tt_cat.taxonomy = 'product_cat'
-        " . ($current_cat_id ? "AND tt_cat.term_id = " . (int)$current_cat_id : "") . "
-    ");
+            SELECT DISTINCT tt.term_id
+            FROM {$wpdb->term_relationships} tr
+            INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
+            INNER JOIN {$wpdb->term_relationships} tr_cat ON p.ID = tr_cat.object_id
+            INNER JOIN {$wpdb->term_taxonomy} tt_cat ON tr_cat.term_taxonomy_id = tt_cat.term_taxonomy_id
+            WHERE p.post_type = 'product'
+            AND p.post_status = 'publish'
+            AND tt.taxonomy = 'product_tag'
+            AND tt_cat.taxonomy = 'product_cat'
+            " . ($current_cat_id ? "AND tt_cat.term_id = " . (int)$current_cat_id : "") . "
+        ");
 
         $terms = get_terms([
             'taxonomy'   => 'product_tag',
             'hide_empty' => true,
             'include'    => $term_ids,
-            'slug'       => ['side', 'lower'], // твои slug
+            'slug'       => $slugs,
         ]);
     } else {
+
         $terms = get_terms([
             'taxonomy'   => $taxonomy,
             'hide_empty' => false
@@ -114,10 +126,15 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
             ];
         }
 
-        // активные фильтры
+        // активные фильтры (🔥 важно: маппим обратно в product_tag)
         foreach ($active_filters as $tax => $values) {
+
+            $mapped_tax = ($tax === 'product_tag_color' || $tax === 'product_tag_connection')
+                ? 'product_tag'
+                : $tax;
+
             $tax_query[] = [
-                'taxonomy' => $tax,
+                'taxonomy' => $mapped_tax,
                 'field'    => 'slug',
                 'terms'    => $values,
                 'operator' => 'IN',
@@ -126,7 +143,7 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
 
         // текущий термин
         $tax_query[] = [
-            'taxonomy' => $taxonomy,
+            'taxonomy' => $real_taxonomy,
             'field'    => 'slug',
             'terms'    => $term->slug,
         ];
@@ -142,21 +159,17 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
         $is_active = isset($active_filters[$taxonomy]) && in_array($term->slug, $active_filters[$taxonomy]);
 
         $items_html .= '<li>
-        <a href="#"
-            class="filter-item ' . ($is_active ? 'active' : '') . '"
-            data-slug="' . esc_attr($term->slug) . '"
-            data-taxonomy="' . esc_attr($taxonomy) . '">
-            ' . esc_html($term->name) . '
-        </a>
-    </li>';
+            <a href="#"
+                class="filter-item ' . ($is_active ? 'active' : '') . '"
+                data-slug="' . esc_attr($term->slug) . '"
+                data-taxonomy="' . esc_attr($taxonomy) . '">
+                ' . esc_html($term->name) . '
+            </a>
+        </li>';
     }
 
-    // 🔥 ЕСЛИ НЕТ ЭЛЕМЕНТОВ — ВООБЩЕ НИЧЕГО НЕ ВЫВОДИМ
-    if (empty($items_html)) {
-        return '';
-    }
+    if (empty($items_html)) return '';
 
-    // 🔥 только теперь выводим блок
     ob_start();
 ?>
 
@@ -180,8 +193,8 @@ function cwc_render_attribute_filter_dynamic($taxonomy, $title, $current_cat_id 
 function cwc_render_filters_with_context($current_cat_id, $active_filters = [])
 {
     $taxonomies = [
-        'pa_czvet' => 'Цвет',
-        'product_tag' => 'Подключение',
+        'product_tag_color' => 'Цвет',
+        'product_tag_connection' => 'Подключение',
         'pa_kolichestvo-sec' => 'Количество секций',
         'pa_pl-obogreva' => 'Площадь обогрева',
         'pa_teplootdacha' => 'Теплоотдача',
@@ -318,7 +331,9 @@ function cwc_filter_products()
         foreach ($active_filters as $taxonomy => $terms) {
 
             $or_block[] = [
-                'taxonomy' => $taxonomy,
+                'taxonomy' => ($taxonomy === 'product_tag_color' || $taxonomy === 'product_tag_connection')
+                    ? 'product_tag'
+                    : $taxonomy,
                 'field'    => 'slug',
                 'terms'    => array_map('wc_clean', $terms),
                 'operator' => 'IN',
