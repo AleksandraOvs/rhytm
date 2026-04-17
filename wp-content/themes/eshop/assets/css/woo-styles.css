@@ -468,6 +468,7 @@ h2.category-heading:after {
 .categories-grid {
     display: flex;
     gap: 10px;
+    margin-bottom: 40px;
 }
 
 .products.columns-3 {
@@ -974,13 +975,13 @@ a.cross-product__slide__image img {
         margin-bottom: 1em;
     }
 
-    .category-item__link {
+    /* .category-item__link {
         padding: 5px 10px;
         border: none;
         border-radius: 0px;
         border-bottom: 1px dotted #fff;
         border-bottom-color: rgb(255, 255, 255);
-    }
+    } */
 
     .category-item__link:hover {
         background: transparent;
