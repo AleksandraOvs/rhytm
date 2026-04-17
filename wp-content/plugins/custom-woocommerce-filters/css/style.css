@@ -593,6 +593,7 @@ Start Sidebar Area Wrapper
         justify-content: flex-start;
         align-items: center;
         gap: 5px;
+        margin: 0;
 
     }
 
@@ -614,7 +615,9 @@ Start Sidebar Area Wrapper
         border-bottom: none;
         border-top: none;
         padding: 0;
-
+        gap: 5px;
+        padding-top: 30px;
+        margin-bottom: 0;
     }
 
     .single-sidebar-wrap .sidebar-title {
@@ -636,10 +639,12 @@ Start Sidebar Area Wrapper
         transition: all .5s linear;
     }
 
+
     .sidebar-area-wrapper._filters.show .single-sidebar-wrap {
         height: max-content;
-        padding-top: 30px;
         opacity: 1;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #cacaca;
     }
 
 
