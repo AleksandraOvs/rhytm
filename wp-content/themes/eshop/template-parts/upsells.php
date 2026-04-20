@@ -11,7 +11,7 @@ if (empty($upsell_ids)) return;
 
 $query = new WP_Query([
     'post_type'      => 'product',
-    'posts_per_page' => 8,
+    'posts_per_page' => -1,
     'post__in'       => $upsell_ids,
     'orderby'        => 'post__in',
     'post_status'    => 'publish',
