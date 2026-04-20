@@ -549,8 +549,9 @@ p.hero-desc {
     }
 
     .three-columns .wp-block-columns .wp-block-column p {
-        font-size: 13px;
+        font-size: 12px;
         margin-bottom: 15px;
+        line-height: 140%;
     }
 }
 
