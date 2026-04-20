@@ -18,7 +18,7 @@ if (!empty($terms)) {
 
     $args = [
         'post_type'      => 'product',
-        'posts_per_page' => 8, // лучше больше для слайдера
+        'posts_per_page' => 15,
         'post__not_in'   => [$product->get_id()],
         'tax_query'      => [
             [
