@@ -155,6 +155,17 @@ del .woocommerce-Price-amount.amount bdi {
     /* gap: 20px; */
 }
 
+.product-inner__content .product_meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.product-inner__content .product_meta .tagged_as {
+    display: none;
+}
+
 .product-inner__content h1 {
     margin-bottom: 20px;
 }

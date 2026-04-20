@@ -426,6 +426,10 @@ p.hero-desc {
     .gallery-slider.swiper .swiper-controls {
         justify-content: flex-end;
     }
+
+    .three-columns div .aspect-ratio11 {
+        aspect-ratio: 3.5/4;
+    }
 }
 
 @media (max-width: 360px) {
