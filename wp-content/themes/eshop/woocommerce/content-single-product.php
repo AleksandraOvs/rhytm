@@ -70,7 +70,24 @@ if (post_password_required()) {
     </div>
     <?php get_template_part('template-parts/cross-products') ?>
 
-    <?php get_template_part('template-parts/related-products') ?>
+    <?php //get_template_part('template-parts/related-products') 
+    ?>
+
+    <?php
+    global $product;
+
+    if (!is_a($product, 'WC_Product')) {
+        $product = wc_get_product(get_the_ID());
+    }
+
+    $upsell_ids = $product ? $product->get_upsell_ids() : [];
+
+    if (!empty($upsell_ids)) {
+        get_template_part('template-parts/upsells');
+    } else {
+        get_template_part('template-parts/related-products');
+    }
+    ?>
 </div>
 
 
