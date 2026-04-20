@@ -427,9 +427,6 @@ p.hero-desc {
         justify-content: flex-end;
     }
 
-    .three-columns div .aspect-ratio11 {
-        aspect-ratio: 3.5/4;
-    }
 }
 
 @media (max-width: 360px) {
@@ -441,6 +438,8 @@ p.hero-desc {
     a.button {
         font-size: 16px;
     }
+
+
 }
 
 /*BANNERS SLIDER*/

@@ -583,3 +583,10 @@ body.archive #primary #main .woocommerce-page__content .container .products li a
         width: calc(100% / 2 - 1em);
     }
 }
+
+@media (max-width: 360px) {
+    .wp-block-group.three-columns .wp-block-columns .wp-block-column.aspect-ratio11 {
+        aspect-ratio: 3/4;
+        position: relative;
+    }
+}
